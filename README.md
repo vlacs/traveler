@@ -1,4 +1,4 @@
-# Traveler| [![Build Status](http://img.shields.io/travis/vlacs/traveler/master.svg)](https://travis-ci.org/vlacs/traveler?branch=master)
+# Traveler [![Build Status](http://img.shields.io/travis/vlacs/traveler/master.svg)](https://travis-ci.org/vlacs/traveler?branch=master)
 
 TODO: Brief description
 
