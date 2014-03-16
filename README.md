@@ -1,4 +1,4 @@
-# Traveler [![Build Status](http://img.shields.io/travis/vlacs/traveler/dev.svg)](https://travis-ci.org/vlacs/traveler?branch=dev)
+# Traveler [![Build Status](http://img.shields.io/travis/vlacs/traveler/dev.svg)](https://travis-ci.org/vlacs/traveler?branch=dev) [![Coverage](http://img.shields.io/coveralls/vlacs/traveler/dev.svg)](http://coveralls.io/r/vlacs/traveler)
 
 TODO: Brief description
 
