@@ -1,32 +1,29 @@
 (ns traveler.system
-  (:require [org.httpkit.server :refer :all]
-            [datomic.api :as d]
-            [datomic-schematode.core :as ds-core]
+  (:require [clojure.pprint :refer [pprint]]
+            [org.httpkit.server :refer :all]
             [traveler.conf :as t-conf]
             [traveler.core :as t-core]
             [traveler.schema :as t-schema]))
 
-(def conf
-  t-conf/load-config)
+(defn conf []
+  (t-conf/load-config))
 
 (def system
-  {:web nil
-   :db  nil})
+  {:web (atom nil) :db (atom nil)})
 
 (defn start-http []
-  (alter-var-root #'system (fn [s]
-                             (update-in s [:web] (run-server t-core/app {:port (get-in conf [:web :port])})))))
+   (reset! (:web system) (run-server t-core/app {:port (get-in (conf) [:web :port])})))
 
 (defn stop-http []
-  (when-not (nil? (:web system))
-    ((:web system) :timeout 100)
-    (alter-var-root #'system (fn [s] (update-in s [:web] (fn [_] nil))))))
+  (when-not (nil? @(:web system))
+    (@(:web system) :timeout 100)
+    (reset! (:web system) nil)))
 
 (defn start-datomic [])
 
 (defn start []
   (start-http)
-  (start-datomic))
+  (pprint #'system))
 
 (defn stop []
   (stop-http))

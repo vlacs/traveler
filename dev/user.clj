@@ -11,42 +11,22 @@
    [clojure.string :as str]
    [clojure.test :as test]
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
-   [traveler.core]))
-
-(def system
-  "A Var containing an object representing the application under
-  development."
-  nil)
-
-(defn init
-  "Creates and initializes the system under development in the Var
-  #'system."
-  []
-  ;; TODO
-  )
+   [traveler.system :as s]))
 
 (defn start
-  "Starts the system running, updates the Var #'system."
   []
-  ;; TODO
-  )
+  (s/start-http))
 
 (defn stop
-  "Stops the system if it is currently running, updates the Var
-  #'system."
   []
-  ;; TODO
-  )
+  (s/stop-http))
 
 (defn go
-  "Initializes and starts the system running."
   []
-  (init)
   (start)
   :ready)
 
 (defn reset
-  "Stops the system, reloads modified source files, and restarts it."
   []
   (stop)
   (refresh :after 'user/go))
