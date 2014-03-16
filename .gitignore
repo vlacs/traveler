@@ -2,6 +2,7 @@
 /lib
 /classes
 /checkouts
+config.edn
 pom.xml
 pom.xml.asc
 *.jar
@@ -11,4 +12,4 @@ pom.xml.asc
 .lein-plugins
 .lein-repl-history
 .lein-git-deps
-config.edn
+.nrepl-port
