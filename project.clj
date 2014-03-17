@@ -3,7 +3,11 @@
   :url "http://vlacs.org"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :repositories {"my.datomic.com" {:url "https://my.datomic.com/repo"
+                                   :username "mgeorge@vlacs.org"
+                                   :password "b64b82b3-6c34-4bcc-aea7-95cc02380f68"}}
   :dependencies [[compojure "1.1.6"]
+                 [com.datomic/datomic-pro "0.9.4556"]
                  [datomic-schema "1.0.2"] ;dep for datomic-schematode
                  [enlive "1.1.5"]
                  [http-kit "2.1.16"]

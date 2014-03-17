@@ -1,6 +1,8 @@
 (ns traveler.system
   (:require [clojure.pprint :refer [pprint]]
             [org.httpkit.server :refer :all]
+            [datomic.api :as d]
+            [datomic-schematode.core :as ds-core]
             [traveler.conf :as t-conf]
             [traveler.core :as t-core]
             [traveler.schema :as t-schema]))
@@ -19,14 +21,26 @@
     (@(:web system) :timeout 100)
     (reset! (:web system) nil)))
 
-(defn start-datomic [])
+(defn start-datomic []
+  (if (= (get-in (conf) [:db :type]) "datomic")
+    (let [d-ss (get-in (conf) [:db :storage-service])
+          d-name (get-in (conf) [:db :db-name])
+          d-uri (str "datomic:" d-ss "://" d-name)]
+    (d/create-database d-uri)
+    (ds-core/schemaload (d/connect d-uri) t-schema/traveler-schema)
+    (reset! (:db system) d-uri))))
+
+(defn stop-datomic []
+  (reset! (:db system) nil))
 
 (defn start []
   (start-http)
+  (start-datomic)
   (pprint #'system))
 
 (defn stop []
-  (stop-http))
+  (stop-http)
+  (stop-datomic))
 
 (defn -main [&args]
   (start))
