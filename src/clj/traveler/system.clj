@@ -13,9 +13,6 @@
 (def system
   {:web (atom nil) :db (atom nil)})
 
-(def db
-  (d/db @(:db system)))
-
 (defn start-http []
    (reset! (:web system) (run-server t-core/app {:port (get-in (conf) [:web :port])})))
 
