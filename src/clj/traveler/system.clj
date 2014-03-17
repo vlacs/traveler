@@ -35,8 +35,8 @@
 
 (defn start []
   (start-http)
-  (start-datomic)
-  (pprint #'system))
+  (start-datomic))
+
 
 (defn stop []
   (stop-http)

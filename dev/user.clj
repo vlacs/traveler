@@ -19,7 +19,8 @@
 
 (defn stop
   []
-  (s/stop-http))
+  (s/stop-http)
+  :stopped)
 
 (defn go
   []
