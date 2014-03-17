@@ -18,6 +18,6 @@
                  ".lein-git-deps/datomic-schematode/src/"]
   :resource-paths ["resources"]
   :plugins [[lein-git-deps "0.0.1-SNAPSHOT"]]
-  :git-dependencies [["https://github.com/vlacs/datomic-schematode.git" "6413487a01"]]
+  :git-dependencies [["https://github.com/vlacs/datomic-schematode.git" "16d31b9"]]
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]]
                    :source-paths ["dev"]}})

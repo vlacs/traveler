@@ -27,7 +27,7 @@
           d-name (get-in (conf) [:db :db-name])
           d-uri (str "datomic:" d-ss "://" d-name)]
     (d/create-database d-uri)
-    (ds-core/schemaload (d/connect d-uri) t-schema/traveler-schema)
+    (ds-core/load-schema! (d/connect d-uri) t-schema/traveler-schema)
     (reset! (:db system) d-uri))))
 
 (defn stop-datomic []
