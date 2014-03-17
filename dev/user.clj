@@ -11,15 +11,18 @@
    [clojure.string :as str]
    [clojure.test :as test]
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
+   [datomic.api :as d]
+   [traveler.schema :as t-schema]
    [traveler.system :as s]))
 
 (defn start
   []
-  (s/start-http))
+  (s/start)
+  (d/transact @(:db s/system) t-schema/traveler-test-data))
 
 (defn stop
   []
-  (s/stop-http)
+  (s/stop)
   :stopped)
 
 (defn go

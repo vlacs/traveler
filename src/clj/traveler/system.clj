@@ -10,6 +10,9 @@
 (defn conf []
   (t-conf/load-config))
 
+(def db
+  (d/db @(:db system)))
+
 (def system
   {:web (atom nil) :db (atom nil)})
 
@@ -28,7 +31,7 @@
           d-uri (str "datomic:" d-ss "://" d-name)]
     (d/create-database d-uri)
     (ds-core/load-schema! (d/connect d-uri) t-schema/traveler-schema)
-    (reset! (:db system) d-uri))))
+    (reset! (:db system) (d/connect d-uri)))))
 
 (defn stop-datomic []
   (reset! (:db system) nil))
@@ -36,7 +39,6 @@
 (defn start []
   (start-http)
   (start-datomic))
-
 
 (defn stop []
   (stop-http)
