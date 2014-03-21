@@ -11,6 +11,7 @@
                  [datomic-schema "1.0.2"] ;dep for datomic-schematode
                  [enlive "1.1.5"]
                  [http-kit "2.1.16"]
+                 [im.chit/gyr "0.3.1"]
                  [liberator "0.10.0"]
                  [org.clojure/clojure "1.5.1"]
                  [ring "1.2.1"]]
