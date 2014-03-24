@@ -313,3 +313,11 @@ table.dataTable thead .sorting:after {
 .form-group > .help-link {
     margin-top: 3px;
 }
+
+.page-header {
+    margin-top: 20px;
+}
+
+.pagination-select {
+    margin-top: -3px;
+}
