@@ -89,6 +89,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
+                <div ng-controller="UsersCtrl">
                 <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -96,7 +97,6 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div ng-controller="UsersCtrl">
                                 <table class="table table-striped table-condensed table-hover">
                                     <thead>
                                         <tr>
@@ -119,23 +119,25 @@
 
                                 </table>
                                 <div class="form-inline form-group pull-left">
-                                    <select class="form-control pagination-select">
-                                        <option>10</option>
-                                        <option>25</option>
-                                        <option>50</option>
-                                        <option>100</option>
-                                        <option>200</option>
+                                    <select class="form-control pagination-select" ng-change="search()" ng-model="usersPerPage">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
                                     </select>
                                     <label>Users per Page</label>
                                 </div>
+                                <div id="pagination-area" class="pull-right">
                                 <ul class="pagination btn-group pull-right" style="margin-top: 0">
                                     <li class="btn btn-default" ng-class="{disabled: currentPage == 0}" ng-click="prevPage()"><i class="fa fa-arrow-left fa-fw"></i></li>
                                     <li class="btn btn-default" ng-repeat="n in range(pagedUsers.length, currentPage, currentPage + gap)" ng-class="{active: n == currentPage}" ng-click="setPage()">
                                         {{n + 1}}
                                     </li>
                                     <li class="btn btn-default" ng-class="{disabled: (currentPage) == pagedUsers.length - 1}" ng-click="nextPage()"><i class="fa fa-arrow-right fa-fw"></i></li>
-                                </ul>
-                            </div>
+                                </ul><br />
+                                <span class="pull-right" style="margin-top:-15px;">Showing {{showingFrom()}} to {{showingTo()}} of {{users.length}}</span>
+                                </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -152,9 +154,9 @@
                         <div class="panel-body">
                             <label>Find User</label>
                             <div class="form-group input-group">
-                                <input class="form-control">
+                                <input class="form-control" ng-model="userQuery">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-search"></i>
+                                    <button class="btn btn-success" type="button" ng-click="runSearch()"><i class="fa fa-search"></i>
                                     </button>
                                 </span>
                             </div>
@@ -164,6 +166,7 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-4 -->
+            </div>
             </div>
             <!-- /.row -->
         </div>
