@@ -136,7 +136,7 @@
                                     </li>
                                     <li class="btn btn-default" ng-class="{disabled: (currentPage) == pagedUsers.length - 1}" ng-click="nextPage()"><i class="fa fa-arrow-right fa-fw"></i></li>
                                 </ul><br />
-                                <span class="pull-right" style="margin-top:-15px;">Showing {{showingFrom()}} to {{showingTo()}} of {{users.length}}</span>
+                                <span class="pull-right" style="margin-top:-15px;">Showing {{showingFrom()}} to {{showingTo()}} of {{filteredUsers.length}}</span>
                                 </div>
                         </div>
                         <!-- /.panel-body -->
@@ -154,7 +154,7 @@
                         <div class="panel-body">
                             <label>Find User</label>
                             <div class="form-group input-group">
-                                <input class="form-control" ng-model="userQuery">
+                                <input class="form-control" ng-model="userQuery" ng-enter="runSearch()">
                                 <span class="input-group-btn">
                                     <button class="btn btn-success" type="button" ng-click="runSearch()"><i class="fa fa-search"></i>
                                     </button>
