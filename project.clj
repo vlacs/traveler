@@ -8,18 +8,15 @@
                                    :password "b64b82b3-6c34-4bcc-aea7-95cc02380f68"}}
   :dependencies [[compojure "1.1.6"]
                  [com.datomic/datomic-pro "0.9.4556"]
-                 [datomic-schema "1.0.2"] ;dep for datomic-schematode
+                 [datomic-schematode "0.1.0-RC1"]
                  [enlive "1.1.5"]
                  [http-kit "2.1.16"]
                  [im.chit/gyr "0.3.1"]
                  [liberator "0.10.0"]
-                 [org.clojure/clojure "1.5.1"]
+                 [org.clojure/clojure "1.6.0"]
                  [ring "1.2.1"]]
-  :source-paths ["src/clj"
-                 ".lein-git-deps/datomic-schematode/src/"]
+  :source-paths ["src/clj" "src/cljs"]
   :resource-paths ["resources"]
-  :plugins [[lein-cloverage "1.0.2"]
-            [lein-git-deps "0.0.1-SNAPSHOT"]]
-  :git-dependencies [["https://github.com/vlacs/datomic-schematode.git" "16d31b9"]]
+  :plugins [[lein-cloverage "1.0.2"]]
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]]
                    :source-paths ["dev"]}})
