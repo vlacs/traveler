@@ -4,6 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[compojure "1.1.6"]
+                 [com.datomic/datomic-free "0.9.4556"]
                  [datomic-schematode "0.1.0-RC1"]
                  [enlive "1.1.5"]
                  [http-kit "2.1.16"]
@@ -14,8 +15,6 @@
   :source-paths ["src/clj" "src/cljs"]
   :resource-paths ["resources"]
   :plugins [[lein-cloverage "1.0.2"]]
-  :profiles {:prod-pro {:dependencies [[com.datomic/datomic-pro "0.9.4556"]]}
-             :prod     {:dependencies [[com.datomic/datomic-free "0.9.4699"]]}
-             :dev      {:dependencies [[org.clojure/tools.namespace "0.2.4"]
-                                       [com.datomic/datomic-free "0.9.4699"]]
-                        :source-paths ["dev"]}})
+  :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]
+                                  [com.datomic/datomic-free "0.9.4699"]]
+                   :source-paths ["dev"]}})
