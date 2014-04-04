@@ -98,10 +98,10 @@
 
   (! $scope.showingTo (fn []
                         (if (== (count $scope.filteredUsers) 0)
-                          0)
-                        (if (== $scope.currentPage (count $scope.pagedUsers))
-                          (count $scope.filteredUsers)
-                          (* $scope.currentPage $scope.usersPerPage))))
+                          0
+                          (if (== $scope.currentPage (count $scope.pagedUsers))
+                            (count $scope.filteredUsers)
+                            (* $scope.currentPage $scope.usersPerPage)))))
 
   ;;Run the search to populate the table
   ($scope.search))
