@@ -41,7 +41,7 @@
           (not= (.indexOf (.toLowerCase haystack) (.toLowerCase needle)) -1)))))
 
   (! $scope.search (fn []
-                     (! $scope.filteredUsers (($filter (str "filter"))
+                     (! $scope.filteredUsers (($filter "filter")
                                               $scope.users (fn [user]
                                                               (if (not $scope.query)
                                                                 true)

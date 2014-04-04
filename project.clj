@@ -19,11 +19,18 @@
   :plugins [[lein-cloverage "1.0.2"]
             [lein-cljsbuild "1.0.2"]]
   :cljsbuild {
-    :builds [{:id "traveler-prod"
+    :builds [{:id "traveler-dev"
+              :source-paths ["src/cljs"]
+              :compiler {
+                :output-to "resources/public/static/js/traveler_dev.js"
+                :optimizations :whitespace
+                :pretty-print true}}
+             {:id "traveler-prod"
               :source-paths ["src/cljs"]
               :compiler {
                 :output-to "resources/public/static/js/traveler.js"
-                :optimizations :whitespace
+                :externs ["resources/externs/angular-1.2.js"]
+                :optimizations :advanced
                 :pretty-print false}}]}
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [com.datomic/datomic-free "0.9.4699"]]

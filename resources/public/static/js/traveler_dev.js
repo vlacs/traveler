@@ -23628,7 +23628,7 @@ traveler.ng.core.users_module_users_ctrl = ["$scope", "$filter", function($scope
   var o_SHARP__18075 = $scope;
   o_SHARP__18075["search"] = function() {
     var o_SHARP__18076__$1 = $scope;
-    o_SHARP__18076__$1["filteredUsers"] = $filter.call(null, [cljs.core.str("filter")].join("")).call(null, $scope["users"], function(user) {
+    o_SHARP__18076__$1["filteredUsers"] = $filter.call(null, "filter").call(null, $scope["users"], function(user) {
       if (cljs.core.not.call(null, $scope["query"])) {
       } else {
       }
