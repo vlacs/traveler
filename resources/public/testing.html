@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="usersModule">
+<html ng-app="users-module">
 
 <head>
 
@@ -9,19 +9,18 @@
     <title>VLACS Traveler - Users</title>
 
     <!-- Core CSS - Include with every page -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/font-awesome/css/font-awesome.css" rel="stylesheet">
 
     <!-- Page-Level Plugin CSS - Dashboard -->
-    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
-    <link href="css/plugins/timeline/timeline.css" rel="stylesheet">
+    <link href="static/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="static/css/plugins/timeline/timeline.css" rel="stylesheet">
 
     <!-- SB Admin CSS - Include with every page -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="static/css/sb-admin.css" rel="stylesheet">
 
-    <script src="js/angular.min.js"></script>
-    <script src="js/user-data.js"></script>
-    <script src="js/static-mockup.js"></script>
+    <script src="static/js/angular.min.js"></script>
+    <script src="static/js/traveler.js"></script>
 
 </head>
 
@@ -90,7 +89,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div ng-controller="UsersCtrl">
+                <div ng-controller="users-ctrl">
                 <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -109,7 +108,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="user in pagedUsers[currentPage]">
+                                        <tr ng-repeat="user in pagedUsers[currentPage - 1]">
                                             <td>{{user.id}}</td>
                                             <td>{{user.username}}</td>
                                             <td>{{user.firstname}}</td>
@@ -121,7 +120,7 @@
                                 </table>
                                 <div class="form-inline form-group pull-left">
                                     <select class="form-control pagination-select" ng-change="search()" ng-model="usersPerPage">
-                                        <option value="10">10</option>
+                                        <option value="10">10</option>-
                                         <option value="25">25</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -131,11 +130,11 @@
                                 </div>
                                 <div id="pagination-area" class="pull-right">
                                 <ul class="pagination btn-group pull-right" style="margin-top: 0">
-                                    <li class="btn btn-default" ng-class="{disabled: currentPage == 0}" ng-click="prevPage()"><i class="fa fa-arrow-left fa-fw"></i></li>
-                                    <li class="btn btn-default" ng-repeat="n in range(pagedUsers.length, currentPage, currentPage + gap)" ng-class="{active: n == currentPage}" ng-click="setPage()">
-                                        {{n + 1}}
+                                    <li class="btn btn-default" ng-class="{disabled: currentPage == 1}" ng-click="prevPage()"><i class="fa fa-arrow-left fa-fw"></i></li>
+                                    <li class="btn btn-default" ng-repeat="n in range(pagedUsers.length, currentPage)" ng-class="{active: n == currentPage}" ng-click="setPage()">
+                                        {{n}}
                                     </li>
-                                    <li class="btn btn-default" ng-class="{disabled: (currentPage) == pagedUsers.length - 1}" ng-click="nextPage()"><i class="fa fa-arrow-right fa-fw"></i></li>
+                                    <li class="btn btn-default" ng-class="{disabled: (currentPage) == pagedUsers.length}" ng-click="nextPage()"><i class="fa fa-arrow-right fa-fw"></i></li>
                                 </ul><br />
                                 <span class="pull-right" style="margin-top:-15px;">Showing {{showingFrom()}} to {{showingTo()}} of {{filteredUsers.length}}</span>
                                 </div>
@@ -155,9 +154,9 @@
                         <div class="panel-body">
                             <label>Find User</label>
                             <div class="form-group input-group">
-                                <input class="form-control" ng-model="userQuery" ng-enter="runSearch()">
+                                <input class="form-control" ng-model="query" ng-enter="search()">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button" ng-click="runSearch()"><i class="fa fa-search"></i>
+                                    <button class="btn btn-success" type="button" ng-click="search()"><i class="fa fa-search"></i>
                                     </button>
                                 </span>
                             </div>

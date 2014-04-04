@@ -15,3 +15,5 @@ pom.xml.asc
 .nrepl-port
 .DS_Store
 user-data.js
+userdata.cljs
+traveler.js

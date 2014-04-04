@@ -2,7 +2,7 @@
     'use strict';
 
     var uMod = angular.module('usersModule', []);
-    
+
     uMod.directive('ngEnter', function () {
         return function (scope, element, attrs) {
             element.bind("keydown keypress", function (event) {
@@ -20,7 +20,7 @@
     uMod.controller('UsersCtrl', function ($scope, $filter) {
 
         $scope.gap = 5;
-        
+
         $scope.filteredUsers = [];
         $scope.groupedUsers = [];
         $scope.usersPerPage = 10;
@@ -31,7 +31,7 @@
         var searchMatch = function (haystack, needle) {
             var hIsNum = false;
             var nIsNum = false;
-            
+
             if (!needle)
                 return true;
             if (parseInt(haystack, 10) > 0)
@@ -42,7 +42,7 @@
                 return false;
             if (!nIsNum && hIsNum)
                 return false;
-            
+
             if (hIsNum) {
                 if (haystack == needle)
                     return true;
@@ -58,17 +58,17 @@
         $scope.search = function () {
             $scope.filteredUsers = $filter('filter')($scope.users, function (user) {
                 if (!$scope.query) {
-                    return true;   
+                    return true;
                 }
                 var searchFields = [user.id, user.username, user.firstname, user.lastname, user.privilege];
                 var splitQuery = $scope.query.split(" ");
                 var match = 0;
-                
+
                 for (var q in splitQuery) {
                     for (var field in searchFields) {
                         if (searchMatch(searchFields[field], splitQuery[q]))
                             ++match;
-                    }   
+                    }
                 }
                 if (match >= splitQuery.length)
                     return true;
@@ -92,22 +92,22 @@
 
         $scope.range = function (size,start, end) {
             var ret = [];
-            
+
             if (size < $scope.gap) {
-                $scope.gap = size;   
+                $scope.gap = size;
             }
             else {
-                $scope.gap = 5;   
+                $scope.gap = 5;
             }
-            
-            
+
+
             if (size < end) {
                 end = size;
                 start = size-$scope.gap;
             }
             for (var i = start; i < end; i++) {
                 ret.push(i);
-            }      
+            }
             return ret;
         };
 
@@ -126,29 +126,29 @@
         $scope.setPage = function () {
             $scope.currentPage = this.n;
         };
-        
+
         $scope.showingFrom = function () {
             if ($scope.filteredUsers.length == 0)
                 return 0;
-            return ($scope.currentPage * $scope.usersPerPage) + 1;  
+            return ($scope.currentPage * $scope.usersPerPage) + 1;
         };
-        
+
         $scope.showingTo = function () {
             if ($scope.filteredUsers.length == 0)
                 return 0;
             if (($scope.currentPage + 1) == $scope.pagedUsers.length)
-                return $scope.filteredUsers.length;   
-            return ($scope.currentPage + 1) * $scope.usersPerPage;   
+                return $scope.filteredUsers.length;
+            return ($scope.currentPage + 1) * $scope.usersPerPage;
         };
-        
+
         $scope.runSearch = function () {
             $scope.query = $scope.userQuery;
             $scope.search();
         };
-        
+
         $scope.search();
     });
 
-    uMod.$inject = ['$scope', '$filter'];
+    //uMod.$inject = ['$scope', '$filter'];
 
 }());
