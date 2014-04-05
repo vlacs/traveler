@@ -1,22 +1,44 @@
 (ns traveler.core
-  (:require [compojure.core :refer [ANY defroutes routes]]
-            [compojure.handler :refer [site]]
-            [compojure.route :refer [not-found]]
+  (:require [compojure.core :refer [ANY defroutes]]
+            [helmsman :refer [compile-routes]]
             [liberator.core :refer [resource]]
             [liberator.dev :refer [wrap-trace]]
-            [traveler.web.http :refer [ignore-trailing-slash wrap-host-urls]]))
+            [ring.middleware.params :refer [wrap-params]]
+            [traveler.templates :as tmpl]
+            [traveler.web.http :refer [wrap-host-urls]]))
 
 (defroutes traveler-routes
   (ANY "/" [] (resource :allowed-methods [:get]
                         :available-media-types ["text/html"]
                         :handle-ok (str "Hello Traveler"))))
 
-(def handler
-  (routes
-   (site traveler-routes)
-   (not-found "The resource you are looking for is not here!")))
+(def liberator-resources
+  {:dashboard (resource :allowed-methods [:get]
+                        :available-media-types ["text/html"]
+                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-dashboard ctx))))
 
-(def app (-> (var handler)
-             (wrap-trace :header :ui)
-             (wrap-host-urls)
-             (ignore-trailing-slash)))
+   :users     (resource :allowed-methods [:get]
+                        :available-media-types ["text/html"]
+                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-users ctx))))
+
+   :system    (resource :allowed-methods [:get]
+                        :available-media-types ["text/html"]
+                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-system ctx))))})
+
+(def helmsman-definition
+  [[:resources "/"]
+   ^{:name "Traveler"
+     :main-menu true}
+   [:any "/" (:dashboard liberator-resources)
+    ^{:name "Manage Users"}
+    [:any "users" (:users liberator-resources)]
+    ^{:name "View System"}
+    [:any "system" (:system liberator-resources)]]
+
+   ;;middleware
+   [wrap-trace :header :ui]
+   [wrap-params]
+   [wrap-host-urls]
+   ])
+
+(def app (compile-routes helmsman-definition))

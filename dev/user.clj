@@ -18,7 +18,8 @@
 (defn start
   []
   (s/start)
-  (d/transact @(:db s/system) t-schema/traveler-test-data))
+  (d/transact @(:db s/system) t-schema/traveler-test-data)
+  :ready)
 
 (defn stop
   []
