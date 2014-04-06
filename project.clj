@@ -1,5 +1,5 @@
-(defproject traveler "0.1.0-SNAPSHOT"
-  :description "Library that controls storage of user data"
+(defproject vlacs/traveler "0.1.4"
+  :description "Library that controls storage and management of user data"
   :url "http://vlacs.org"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
@@ -18,7 +18,7 @@
   :source-paths ["src/clj" "src/cljs"]
   :resource-paths ["resources"]
 
-  :pedantic? :warn
+  :pedantic? :error
 
   :plugins [[lein-cloverage "1.0.2"]
             [lein-cljsbuild "1.0.2"]]
