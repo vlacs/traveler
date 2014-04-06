@@ -12,13 +12,13 @@
    [clojure.test :as test]
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
    [datomic.api :as d]
-   [testdata :as td]
+   [testdata.testdata :as td]
    [traveler.system :as s]))
 
 (defn start
   []
   (s/start)
-  (d/transact @(:db s/system) td/traveler-test-data)
+  (d/transact @(:db s/system) (td/load-testdata))
   :ready)
 
 (defn stop
