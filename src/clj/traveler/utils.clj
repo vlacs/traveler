@@ -1,5 +1,6 @@
 (ns traveler.utils
-  (:require [clojure.string :refer [split]])
+  (:require [clojure.string :refer [split]]
+            [helmsman.uri :as h-uri])
   (:import (java.io File)))
 
 (defmacro maybe-substitute
@@ -27,8 +28,8 @@
 (defn referer [ctx]
   (str (first (split (get-in ctx [:request :headers "referer"]) #"\?"))))
 
-(defn base-url [ctx]
-  (str (get-in ctx [:request :base-url])))
+(defn base-uri [ctx]
+  (h-uri/assemble (get-in ctx [:request :helmsman :uri-path])))
 
 (defn error [ctx]
   (let [error (get-in ctx [:request :query-params "error"])]

@@ -13,7 +13,7 @@
                  [liberator "0.10.0" :exclusions [hiccup]]
                  [org.clojure/clojure "1.6.0"]
                  [ring "1.2.1"]
-                 [vlacs/helmsman "0.1.4"]]
+                 [org.vlacs/helmsman "0.1.8"]]
 
   :source-paths ["src/clj" "src/cljs"]
   :resource-paths ["resources"]

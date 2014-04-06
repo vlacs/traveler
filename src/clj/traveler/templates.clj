@@ -3,8 +3,8 @@
             [traveler.utils :as t-utils]
             [traveler.utils :refer [maybe-content maybe-substitute]]))
 
-(defn replace-asset-path [base-url]
-  (html/transform-content (html/replace-vars {:ASSET_PATH (str base-url "/static/")})))
+(defn replace-asset-path [base-uri]
+  (html/transform-content (html/replace-vars {:ASSET_PATH (str base-uri "/static/")})))
 
 (defn render [template]
   (reduce str template))
@@ -12,12 +12,12 @@
 ;; base template
 
 (html/deftemplate base "templates/base.html"
-  [{:keys [title nav-side content base-url ng-app]}]
+  [{:keys [title nav-side content base-uri ng-app]}]
   [:html]          (html/set-attr :ng-app (or ng-app (str "")))
   [:head :title]   (maybe-content title)
   [:#nav]          (maybe-substitute nav-side)
   [:div.content]   (maybe-substitute content)
-  [#{:head :body}] (replace-asset-path base-url))
+  [#{:head :body}] (replace-asset-path base-uri))
 
 ;;snippets
 
@@ -47,7 +47,7 @@
          ;;:nav-side (nav-side)
          :content content
          ;;:footer (footer)
-         :base-url (t-utils/base-url ctx)
+         :base-uri (t-utils/base-uri ctx)
          :ng-app ng-app}))
 
 ;;views
