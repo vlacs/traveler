@@ -29,7 +29,7 @@
   (str (first (split (get-in ctx [:request :headers "referer"]) #"\?"))))
 
 (defn base-uri [ctx]
-  (h-uri/assemble (get-in ctx [:request :helmsman :uri-path])))
+  (h-uri/assemble (h-uri/relative-uri (get-in ctx [:request :helmsman :uri-path]) [""])))
 
 (defn error [ctx]
   (let [error (get-in ctx [:request :query-params "error"])]

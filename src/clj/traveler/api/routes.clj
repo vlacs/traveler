@@ -1,1 +1,1 @@
-(ns travler.api.routes)
+(ns traveler.api.routes)

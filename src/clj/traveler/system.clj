@@ -31,6 +31,10 @@
     (reset! (:db system) (d/connect d-uri)))))
 
 (defn stop-datomic []
+  (let [d-ss (get-in (conf) [:db :storage-service])
+        d-name (get-in (conf) [:db :db-name])
+        d-uri (str "datomic:" d-ss "://" d-name)]
+    (d/delete-database d-uri))
   (reset! (:db system) nil))
 
 (defn start []

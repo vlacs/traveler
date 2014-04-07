@@ -16,6 +16,6 @@ pom.xml.asc
 .DS_Store
 user-data.js
 userdata.cljs
-testdata.dtm
+/dev/testdata/data.clj
 traveler.js
 traveler_dev.js
