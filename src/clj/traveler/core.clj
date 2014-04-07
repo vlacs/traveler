@@ -27,11 +27,7 @@
 
    :system    (resource :allowed-methods [:get]
                         :available-media-types ["text/html"]
-                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-system ctx))))
-
-   :test      (resource :allowed-methods [:get]
-                        :available-media-types["text/html"]
-                        :handle-ok (fn [ctx] (str (t-utils/base-uri ctx))))})
+                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-system ctx))))})
 
 (def helmsman-definition
   [[:resources "/"]
