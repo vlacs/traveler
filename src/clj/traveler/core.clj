@@ -21,9 +21,7 @@
 
    :users     (resource :allowed-methods [:get]
                         :available-media-types ["text/html"]
-                        :handle-ok (fn [ctx] (do
-                                               (pprint ctx)
-                                               (tmpl/render (tmpl/view-users ctx)))))
+                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-users ctx))))
 
    :system    (resource :allowed-methods [:get]
                         :available-media-types ["text/html"]
