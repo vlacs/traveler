@@ -3,13 +3,28 @@
             [cheshire.core :refer :all]
             [traveler.system :as s]))
 
-(defn ents [attr]
-  (map #(d/entity (d/db @(:db s/system)) (first %))
-       (d/q '[:find ?e
-              :in $ ?a
-              :where [?e ?a ?attr]]
-            (d/db @(:db s/system))
-            attr)))
+(defn ents
+  ([attr]
+   (map #(d/entity (d/db @(:db s/system)) (first %))
+        (sort (d/q '[:find ?e
+                     :in $ ?a
+                     :where [?e ?a]]
+                   (d/db @(:db s/system))
+                   attr))))
+  ([attr limit]
+   (map #(d/entity (d/db @(:db s/system)) (first %))
+        (take limit (sort (d/q '[:find ?e
+                                 :in $ ?a
+                                 :where [?e ?a]]
+                               (d/db @(:db s/system))
+                               attr)))))
+  ([attr limit offset]
+   (map #(d/entity (d/db @(:db s/system)) (first %))
+        (take limit (drop offset (sort (d/q '[:find ?e
+                                              :in $ ?a
+                                              :where [?e ?a]]
+                                            (d/db @(:db s/system))
+                                            attr)))))))
 
 (defn ent->map [convert-data entity]
   (reduce (fn [m attr]

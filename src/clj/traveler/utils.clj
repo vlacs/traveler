@@ -1,6 +1,10 @@
 (ns traveler.utils
   (:require [clojure.string :refer [split]]
-            [helmsman.uri :as h-uri])
+            [clojure.pprint :refer [pprint]]
+            [clojure.java.io :refer [resource]]
+            [helmsman.uri :as h-uri]
+            [liberator.representation :refer [ring-response]]
+            [ring.util.response :refer [url-response]])
   (:import (java.io File)))
 
 (defmacro maybe-substitute
@@ -36,6 +40,11 @@
     (if (empty? error)
       false
       error)))
+
+(defn external-resource
+  [ctx libname]
+  (let [uri (get-in ctx [:request :route-params :*])]
+    (ring-response (url-response (resource (str libname "/" uri))))))
 
 (defn chop
   "Removes the last character of string."

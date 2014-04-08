@@ -3,8 +3,9 @@
             [traveler.utils :as t-utils]
             [traveler.utils :refer [maybe-content maybe-substitute]]))
 
-(defn replace-asset-path [base-uri]
-  (html/transform-content (html/replace-vars {:ASSET_PATH (str base-uri "/static/")})))
+(defn replace-page-vars [base-uri]
+  (html/transform-content (html/replace-vars {:ASSET_PATH (str base-uri "/static") :BASE_PATH base-uri})))
+
 
 (defn render [template]
   (reduce str template))
@@ -17,7 +18,7 @@
   [:head :title]   (maybe-content title)
   [:#nav]          (maybe-substitute nav-side)
   [:div.content]   (maybe-substitute content)
-  [#{:head :body}] (replace-asset-path base-uri))
+  [#{:head :body}] (replace-page-vars base-uri))
 
 ;;snippets
 

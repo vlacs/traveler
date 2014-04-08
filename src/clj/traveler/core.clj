@@ -9,11 +9,6 @@
             [traveler.web.http :refer [wrap-host-urls]]
             [traveler.utils :as t-utils]))
 
-(defroutes traveler-routes
-  (ANY "/" [] (resource :allowed-methods [:get]
-                        :available-media-types ["text/html"]
-                        :handle-ok (str "Hello Traveler"))))
-
 (def liberator-resources
   {:dashboard (resource :allowed-methods [:get]
                         :available-media-types ["text/html"]
@@ -25,10 +20,15 @@
 
    :system    (resource :allowed-methods [:get]
                         :available-media-types ["text/html"]
-                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-system ctx))))})
+                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-system ctx))))
+
+   :timber    (resource :allowed-methods [:get]
+                        :available-media-types ["text/html" "text/css" "text/javascript"]
+                        :handle-ok (fn [ctx] (t-utils/external-resource ctx "timber")))})
 
 (def helmsman-definition
   [[:resources "/"]
+   [:any "/timber/*" (:timber liberator-resources)]
    ^{:name "Traveler"
      :main-menu true}
    [:any "/" (:dashboard liberator-resources)
