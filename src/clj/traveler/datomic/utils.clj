@@ -39,8 +39,19 @@
           {}
           convert-data))
 
-(defn ents->json [attr output-model]
-  (let [entities (ents attr)]
-    (map (fn ents->json- [e]
-           (generate-string (ent->map output-model e)))
-         entities)))
+(defn ents->json
+  ([attr output-model]
+   (let [entities (ents attr)]
+     (map (fn ents->json- [e]
+            (generate-string (ent->map output-model e)))
+          entities)))
+  ([attr output-model limit]
+   (let [entities (ents attr limit)]
+     (map (fn ents->json- [e]
+            (generate-string (ent->map output-model e)))
+          entities)))
+  ([attr output-model limit offset]
+   (let [entities (ents attr limit offset)]
+     (map (fn ents->json- [e]
+            (generate-string (ent->map output-model e)))
+          entities))))
