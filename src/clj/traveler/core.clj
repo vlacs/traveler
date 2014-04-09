@@ -5,6 +5,7 @@
             [liberator.core :refer [resource]]
             [liberator.dev :refer [wrap-trace]]
             [ring.middleware.params :refer [wrap-params]]
+            [traveler.api.routes :refer [api-routes]]
             [traveler.templates :as tmpl]
             [traveler.web.http :refer [wrap-host-urls]]
             [traveler.utils :as t-utils]))
@@ -36,7 +37,7 @@
     [:any "/users" (:users liberator-resources)]
     ^{:name "View System"}
     [:any "/system" (:system liberator-resources)]]
-
+   (into [:context "/api"] api-routes)
    ;;middleware
    [wrap-trace :header :ui]
    [wrap-params]
