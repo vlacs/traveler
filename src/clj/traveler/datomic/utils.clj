@@ -1,7 +1,18 @@
 (ns traveler.datomic.utils
-  (:require [datomic.api :as d]
-            [cheshire.core :refer :all]
+  (:require [cheshire.core :refer [generate-string]]
+            [datomic.api :as d]
             [traveler.system :as s]))
+
+(defn find-ents
+  [attr match]
+  (map #(d/entity (d/db @(:db s/system)) (first %))
+       (d/q '[:find ?e
+              :in $ ?attr ?matcher
+              :where
+              [?e ?attr ?ln]
+              [(re-find ?matcher ?ln)]]
+            (d/db @(:db s/system))
+            attr (re-pattern (str match ".*")))))
 
 (defn ents
   ([attr]
@@ -38,6 +49,13 @@
                   m))))
           {}
           convert-data))
+
+(defn find-ents->json
+  [attr match output-model]
+  (let [entities (find-ents attr match)]
+    (map (fn find-ents->json- [e]
+           (generate-string (ent->map output-model e)))
+         entities)))
 
 (defn ents->json
   ([attr output-model]

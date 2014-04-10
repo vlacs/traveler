@@ -8,5 +8,6 @@
                    [:lastname :string]
                    [:firstname :string]
                    [:email :string]
+                   [:policies-assent-date :string]
                    [:istest :boolean]
-                   [:can_masquerade :boolean]]}]])
+                   [:can-masquerade :boolean]]}]])
