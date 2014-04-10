@@ -42,11 +42,6 @@
       false
       error)))
 
-(defn external-resource
-  [ctx libname]
-  (let [uri (get-in ctx [:request :route-params :*])]
-    (ring-response (url-response (resource (str libname "/" uri))))))
-
 (defn chop
   "Removes the last character of string."
   [s]
