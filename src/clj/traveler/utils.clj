@@ -27,6 +27,9 @@
           (format "File missing at (%s)" path)
           {:cause :file-missing :file-path path})))
 
+(defn get-param [ctx param]
+  (get-in ctx [:request :params param]))
+
 (defn referer [ctx]
   (str (first (split (get-in ctx [:request :headers "referer"]) #"\?"))))
 
