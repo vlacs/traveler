@@ -1,7 +1,7 @@
 (ns traveler.api.api
   (:require [cheshire.core :refer [generate-string]]
-            [traveler.utils :as t-utils]
-            [ring.util.codec :refer [url-encode]]))
+            [ring.util.codec :refer [url-encode]]
+            [traveler.utils :as t-utils]))
 
 (def response-key :response-status)
 

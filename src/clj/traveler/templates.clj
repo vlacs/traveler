@@ -1,11 +1,10 @@
 (ns traveler.templates
   (:require [net.cgrand.enlive-html :as html]
-            [traveler.utils :as t-utils]
-            [traveler.utils :refer [maybe-content maybe-substitute]]))
+            [traveler.utils :as t-utils :refer [maybe-content
+                                                maybe-substitute]]))
 
 (defn replace-page-vars [base-uri]
   (html/transform-content (html/replace-vars {:ASSET_PATH (str base-uri "/static") :BASE_PATH base-uri})))
-
 
 (defn render [template]
   (reduce str template))

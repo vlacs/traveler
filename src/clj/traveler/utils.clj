@@ -1,9 +1,7 @@
 (ns traveler.utils
   (:require [clojure.string :refer [split]]
             [clojure.pprint :refer [pprint]]
-            [clojure.java.io :refer [resource]]
             [helmsman.uri :as h-uri]
-            [liberator.representation :refer [ring-response]]
             [ring.util.response :refer [url-response]])
   (:import (java.io File)))
 

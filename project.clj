@@ -3,18 +3,20 @@
   :url "http://vlacs.org"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojurescript "0.0-2173"]
-                 [compojure "1.1.6" :exclusions [org.clojure/tools.macro]]
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/clojurescript "0.0-2173"]
+                 [org.vlacs/helmsman "0.1.8"]
+                 [vlacs/timber "0.1.0-SNAPSHOT"]
+                 [cheshire "5.3.1"]
                  [com.datomic/datomic-free "0.9.4699" :exclusions [commons-codec]]
                  [datomic-schematode "0.1.0-RC1"]
                  [enlive "1.1.5"]
                  [http-kit "2.1.16"]
                  [im.chit/gyr "0.3.1"]
                  [liberator "0.10.0" :exclusions [hiccup]]
-                 [org.clojure/clojure "1.6.0"]
                  [ring "1.2.1"]
-                 [org.vlacs/helmsman "0.1.8"]
-                 [vlacs/timber "0.1.0-SNAPSHOT"]]
+                 [ring/ring-json "0.3.0"]
+                 [valip "0.2.0"]]
 
   :source-paths ["src/clj" "src/cljs"]
   :resource-paths ["resources"]

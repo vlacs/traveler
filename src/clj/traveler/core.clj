@@ -1,14 +1,16 @@
 (ns traveler.core
-  (:require [compojure.core :refer [ANY defroutes]]
-            [clojure.pprint :refer [pprint]]
-            [helmsman :refer [compile-routes]]
+  (:require [helmsman :refer [compile-routes]]
             [liberator.core :refer [resource]]
             [liberator.dev :refer [wrap-trace]]
+            [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.util.response :as response]
             [traveler.api.routes :refer [api-routes]]
             [traveler.templates :as tmpl]
-            [traveler.web.http :refer [wrap-host-urls]]
             [traveler.utils :as t-utils]))
+
+(defn dash-redirect [_]
+  (response/redirect "/dashboard"))
 
 (def liberator-resources
   {:dashboard (resource :allowed-methods [:get]

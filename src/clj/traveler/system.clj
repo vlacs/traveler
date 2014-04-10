@@ -1,8 +1,7 @@
 (ns traveler.system
-  (:require [clojure.pprint :refer [pprint]]
-            [org.httpkit.server :refer :all]
+  (:require [datomic-schematode.core :as ds-core]
             [datomic.api :as d]
-            [datomic-schematode.core :as ds-core]
+            [org.httpkit.server :refer :all]
             [traveler.conf :as t-conf]
             [traveler.core :as t-core]
             [traveler.schema :as t-schema]))
