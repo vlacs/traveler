@@ -7,7 +7,10 @@
 
 (defn gen-response
   ([] {response-key {:status "success"}})
-  ([error] {response-key {:status "fail" :error error}}))
+  ([error]
+   (if (nil? error)
+     {response-key {:status "success"}}
+     {response-key {:status "fail" :error error}})))
 
 (defn handle-created [ctx]
   (let [status (get-in ctx [response-key :status])
