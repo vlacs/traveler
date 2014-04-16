@@ -16,27 +16,39 @@
   ([expr & exprs] `(maybe-content (or ~expr ~@exprs))))
 
 (defn file-exists?
+  "Check if a file exists (boolean)"
   [path]
   (if (.isFile (File. path))
     true
     false))
 
 (defn throw-file-missing
+  "Throw an error if a file is missing."
   [path]
   (throw (ex-info
           (format "File missing at (%s)" path)
           {:cause :file-missing :file-path path})))
 
-(defn get-param [ctx param]
+(defn get-param
+  "Get a parameter out of the liberator context"
+  [ctx param]
   (get-in ctx [:request :params param]))
 
-(defn referer [ctx]
+(defn referer
+  "Get the referrer out of the liberator context"
+  [ctx]
   (str (first (split (get-in ctx [:request :headers "referer"]) #"\?"))))
 
-(defn base-uri [ctx]
-  (h-uri/assemble (h-uri/relative-uri (get-in ctx [:request :helmsman :uri-path]) [""])))
+(defn base-uri
+  "Generate the base uri from the liberator context"
+  [ctx]
+  (h-uri/assemble
+   (h-uri/relative-uri
+    (get-in ctx [:request :helmsman :uri-path]) [""])))
 
-(defn error [ctx]
+(defn error
+  "Get the error out of the liberator context"
+  [ctx]
   (let [error (get-in ctx [:request :query-params "error"])]
     (if (empty? error)
       false

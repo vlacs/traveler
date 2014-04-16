@@ -16,22 +16,26 @@
    [traveler.system :as s]))
 
 (defn start
+  "Start the system from the REPL"
   []
   (s/start)
   (d/transact @(:db s/system) (td/load-testdata))
   :ready)
 
 (defn stop
+  "Stop the system from the REPL"
   []
   (s/stop)
   :stopped)
 
 (defn go
+  "Start the system from the REPL"
   []
   (start)
   :ready)
 
 (defn reset
+  "Reload project and restart it from the REPL"
   []
   (stop)
   (refresh :after 'user/go))

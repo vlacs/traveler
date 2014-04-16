@@ -2,30 +2,36 @@
   (:require [helmsman :refer [compile-routes]]
             [liberator.core :refer [resource]]
             [liberator.dev :refer [wrap-trace]]
-            [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.util.response :as response]
             [traveler.api.routes :refer [api-routes]]
             [traveler.templates :as tmpl]
             [traveler.utils :as t-utils]))
 
-(defn dash-redirect [_]
+(defn dash-redirect
+  "Quick hack to redirect to dashboard"
+  [_]
   (response/redirect "/dashboard"))
 
 (def liberator-resources
+  "Core resources"
   {:dashboard (resource :allowed-methods [:get]
                         :available-media-types ["text/html"]
-                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-dashboard ctx))))
+                        :handle-ok (fn [ctx]
+                                     (tmpl/render (tmpl/view-dashboard ctx))))
 
    :users     (resource :allowed-methods [:get]
                         :available-media-types ["text/html"]
-                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-users ctx))))
+                        :handle-ok (fn [ctx]
+                                     (tmpl/render (tmpl/view-users ctx))))
 
    :system    (resource :allowed-methods [:get]
                         :available-media-types ["text/html"]
-                        :handle-ok (fn [ctx] (tmpl/render (tmpl/view-system ctx))))})
+                        :handle-ok (fn [ctx]
+                                     (tmpl/render (tmpl/view-system ctx))))})
 
 (def helmsman-definition
+  "Main helmsman definition"
   [[:resources "/"]
    [:resources "timber" {:root "/timber"}]
    ^{:name "Traveler"
@@ -43,4 +49,6 @@
    [wrap-trace :header :ui]
    ])
 
-(def app (compile-routes helmsman-definition))
+(def app
+  "Main app"
+  (compile-routes helmsman-definition))

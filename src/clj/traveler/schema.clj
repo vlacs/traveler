@@ -1,6 +1,7 @@
 (ns traveler.schema)
 
 (def traveler-schema
+  "Main traveler datomic schema"
   [[:user {:attrs [[:id-sk :string :db.unique/identity]
                    [:username :string :db.unique/identity]
                    [:password :string]

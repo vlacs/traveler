@@ -17,7 +17,9 @@
 ;; Optional Fields (default to false)
 ;;  istest
 ;;  can_masquerade
-(defn validate-add-user [user]
+(defn validate-add-user
+  "Validate user map"
+  [user]
   (validate user
     [:id-sk present? "must be present"]
     [:id-sk digits? "must consist of digits"]
@@ -28,7 +30,7 @@
     [:firstname present? "must be present"]
     [:email present? "must be present"]
     [:email email-address? "must be a valid email address"]
-    [:policies_assent_date present? "must be present"]))
+    [:policies-assent-date present? "must be present"]))
 
 ;;testing
 
@@ -39,11 +41,13 @@
 ;           :lastname "George"
 ;           :firstname "Michael"
 ;           :email "mgeorge@vlacs.org"
-;           :policies_assent_date "2001-03-02"
+;           :policies-assent-date "2001-03-02"
 ;           })
 
 
 ;;end testing
 
-(defn add-user [ctx]
+(defn add-user
+  "Public facing add-user endpoint"
+  [ctx]
   (gen-response "This endpoint is not implemented yet!"))

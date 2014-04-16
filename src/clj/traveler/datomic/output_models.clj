@@ -1,18 +1,19 @@
 (ns traveler.datomic.output-models)
 
 (def user
-  [:user/privilege
+  "Define template for user map"
+  [:user/can-masquerade
+   :user/istest
+   :user/polocies-assent-date
+   :user/privilege
    :user/email
    :user/lastname
    :user/firstname
    :user/password
    :user/username
-   :user/id-sk])
+   :user/id-sk
+   :user/istest])
 
 (def user-no-pass
-  [:user/privilege
-   :user/email
-   :user/lastname
-   :user/firstname
-   :user/username
-   :user/id-sk])
+  "Return user model without password attr"
+  (mapv #(keyword %) (remove #{:user/password} user)))
