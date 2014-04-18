@@ -16,7 +16,7 @@
 ;;
 ;; Optional Fields (default to false)
 ;;  istest
-;;  can_masquerade
+;;  can-masquerade
 (defn validate-add-user
   "Validate user map"
   [user]
@@ -34,15 +34,16 @@
 
 ;;testing
 
-;(def user {:id-sk "00392"
-;           :username "mgeorge"
-;           :password "kaj309jdfna0sd9flk4nas2"
-;           :privilege "ADMIN"
-;           :lastname "George"
-;           :firstname "Michael"
-;           :email "mgeorge@vlacs.org"
-;           :policies-assent-date "2001-03-02"
-;           })
+#_
+(def user {:id-sk "00392"
+           :username "mgeorge"
+           :password "kaj309jdfna0sd9flk4nas2"
+           :privilege "ADMIN"
+           :lastname "George"
+           :firstname "Michael"
+           :email "mgeorge@vlacs.org"
+           :policies-assent-date "2001-03-02"
+           })
 
 
 ;;end testing
