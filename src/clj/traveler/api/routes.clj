@@ -15,18 +15,12 @@
 
    :users-add    (resource :allowed-methods [:put]
                            :available-media-types ["application/json"]
-                           :put! (fn [ctx]
-                                   (do
-                                     (pprint (:request ctx))
-                                     (add-user ctx)))
+                           :put! (fn [ctx] (add-user ctx))
                            :handle-created (fn [ctx] (handle-created ctx)))
 
    :users-search (resource :allowed-methods [:get]
                            :available-media-types ["text/html"]
-                           :handle-ok (fn [ctx]
-                                        (do
-                                          (pprint (:request ctx))
-                                          (str "this is a search"))))
+                           :handle-ok (fn [ctx] (str "this is a search")))
 
    :users-user   (resource :allowed-methods [:get]
                            :available-media-types ["application/json"]
