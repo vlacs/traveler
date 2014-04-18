@@ -1,6 +1,4 @@
 {
  :web {:port 8080}
- :db  {:type "datomic"
-       :storage-service "mem"
-       :db-name "galleon"}
+ :db  {:uri "datomic:mem://galleon"}
 }

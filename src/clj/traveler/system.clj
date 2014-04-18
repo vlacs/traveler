@@ -31,20 +31,16 @@
 (defn start-datomic
   "Start the datomic database and transact the schema"
   []
-  (if (= (get-in (conf) [:db :type]) "datomic")
-    (let [d-ss (get-in (conf) [:db :storage-service])
-          d-name (get-in (conf) [:db :db-name])
-          d-uri (str "datomic:" d-ss "://" d-name)]
+  (let [d-uri (get-in (conf) [:db :uri])]
     (d/create-database d-uri)
+    (ds-core/init-schematode-constraints! (d/connect d-uri))
     (ds-core/load-schema! (d/connect d-uri) t-schema/traveler-schema)
-    (reset! (:db system) (d/connect d-uri)))))
+    (reset! (:db system) (d/connect d-uri))))
 
 (defn stop-datomic
   "Shutdown and destroy the datomic database"
   []
-  (let [d-ss (get-in (conf) [:db :storage-service])
-        d-name (get-in (conf) [:db :db-name])
-        d-uri (str "datomic:" d-ss "://" d-name)]
+  (let [d-uri (get-in (conf) [:db :uri])]
     (d/delete-database d-uri))
   (reset! (:db system) nil))
 
