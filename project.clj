@@ -5,10 +5,11 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-2173"]
+                 [org.vlacs/hatch "0.1.0" :exclusions [com.datomic/datomic-free]]
                  [org.vlacs/helmsman "0.1.8"]
                  [vlacs/timber "0.1.0-SNAPSHOT"]
                  [cheshire "5.3.1"]
-                 [com.datomic/datomic-free "0.9.4699" :exclusions [commons-codec]]
+                 [com.datomic/datomic-free "0.9.4707" :exclusions [commons-codec]]
                  [crypto-password "0.1.3"]
                  [datomic-schematode "0.1.0-RC1"]
                  [digest "1.4.4"]
