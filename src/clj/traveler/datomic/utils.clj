@@ -4,7 +4,6 @@
             [hatch]
             [traveler.conf :as t-conf]
             [traveler.schema :as t-schema]
-            [traveler.system :as s]
             [traveler.datomic.output-models :refer :all]))
 
 (defn conf []
