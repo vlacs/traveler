@@ -1,6 +1,5 @@
 (ns traveler.api.routes
   (:require [cheshire.core :refer [generate-string]]
-            [clojure.pprint :refer [pprint]]
             [liberator.core :refer [resource]]
             [traveler.api.api :refer [handle-created]]
             [traveler.api.users :refer [add-user]]))
