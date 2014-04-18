@@ -20,12 +20,12 @@
     true))
 
 (defn hashed-md5
-  "Takes a string and returns it's hashed (configurable) md5"
+  "Takes a string and returns its hashed (configurable) md5"
   [in]
   (let [hash "vlacsiscool"]
     (digest/md5 (str hash in))))
 
 (defn md5
-  "Takes a string and returns it's md5"
+  "Takes a string and returns its md5"
   [in]
   (digest/md5 in))
