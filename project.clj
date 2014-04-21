@@ -16,6 +16,7 @@
                  [enlive "1.1.5"]
                  [http-kit "2.1.16"]
                  [im.chit/gyr "0.3.1"]
+                 [inflections "0.9.6"]
                  [liberator "0.10.0" :exclusions [hiccup]]
                  [ring "1.2.1"]
                  [ring/ring-json "0.3.0"]
