@@ -13,15 +13,15 @@
   "Validate user map"
   [user]
   (validate user
-    [:id-sk present? "must be present"]
-    [:id-sk digits? "must consist of digits"]
-    [:username present? "must be present"]
-    [:password present? "must be present"]
-    [:privilege present? "must be present"]
-    [:lastname present? "must be present"]
-    [:firstname present? "must be present"]
-    [:email present? "must be present"]
-    [:policies-assent-date present? "must be present"]))
+            [:id-sk present? "must be present"]
+            [:id-sk digits? "must consist of digits"]
+            [:username present? "must be present"]
+            [:password present? "must be present"]
+            [:privilege present? "must be present"]
+            [:lastname present? "must be present"]
+            [:firstname present? "must be present"]
+            [:email present? "must be present"]
+            [:policies-assent-date present? "must be present"]))
 
 ;;TODO: Pull apart valip response on error and make the
 ;; error messages better.
@@ -40,9 +40,7 @@
   [ctx]
   (let [id-sk (get-in ctx [:request :route-params :id-sk])
         res   (ent->json :user/id-sk id-sk user-no-pass)]
-    (if (= "{}" res)
-      (gen-response "User not found!")
-      res)))
+    res))
 
 (defn search-user
   "Public facing JSON endpoint to search for users"

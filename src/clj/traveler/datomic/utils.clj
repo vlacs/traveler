@@ -20,7 +20,7 @@
   "Strip the datomic namespace from keys in a map"
   [in]
   (reduce conj {}
-        (map #(vector (keyword (name (first %))) (second %)) in)))
+          (map #(vector (keyword (name (first %))) (second %)) in)))
 
 (defn get-namespace
   "Get the namespace of an attribute"
@@ -100,20 +100,21 @@
   "Find entities by attribute and convert to
   json using an output-model"
   [attr match output-model]
-  (generate-string {(keyword (plural (get-namespace attr)))
-                    (let [entities (find-ents attr match)]
+  (let [entities (find-ents attr match)]
+    (generate-string {(keyword (plural (get-namespace attr)))
                       (into []
                             (flatten
                              (map (fn find-ents->json- [e]
                                     (vector (ent->map output-model e)))
-                                  entities))))}))
+                                  entities)))})))
 
 (defn ent->json
   "Retrieve a single entity by attribute value in
   JSON format"
   [attr value output-model]
   (let [entity (first (ent attr value))]
-    (generate-string (ent->map output-model entity))))
+    (generate-string {(keyword (get-namespace attr))
+                      (ent->map output-model entity)})))
 
 (defn ents->json
   "Convert all entities that have specific attribute
@@ -121,18 +122,24 @@
   or limit and offset them"
   ([attr output-model]
    (let [entities (ents attr)]
-     (map (fn ents->json- [e]
-            (generate-string (ent->map output-model e)))
-          entities)))
+     (generate-string {(keyword (plural (get-namespace attr)))
+                       (flatten
+                        (map (fn ents->json- [e]
+                               (vector (ent->map output-model e)))
+                             entities))})))
 
   ([attr output-model limit]
    (let [entities (ents attr limit)]
-     (map (fn ents->json- [e]
-            (generate-string (ent->map output-model e)))
-          entities)))
+     (generate-string {(keyword (plural (get-namespace attr)))
+                       (flatten
+                        (map (fn ents->json- [e]
+                               (vector (ent->map output-model e)))
+                             entities))})))
 
   ([attr output-model limit offset]
    (let [entities (ents attr limit offset)]
-     (map (fn ents->json- [e]
-            (generate-string (ent->map output-model e)))
-          entities))))
+     (generate-string {(keyword (plural (get-namespace attr)))
+                       (flatten
+                        (map (fn ents->json- [e]
+                               (vector (ent->map output-model e)))
+                             entities))}))))
