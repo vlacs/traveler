@@ -2,7 +2,7 @@
   (:require [cheshire.core :refer [generate-string]]
             [liberator.core :refer [resource]]
             [traveler.api.api :refer [handle-created]]
-            [traveler.api.users :refer [add-user]]))
+            [traveler.api.user :refer [add-user get-user search-user]]))
 
 (def liberator-resources
   "Map of liberator resources for the api endpoint"

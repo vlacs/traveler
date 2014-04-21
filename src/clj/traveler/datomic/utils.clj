@@ -1,7 +1,9 @@
 (ns traveler.datomic.utils
   (:require [cheshire.core :refer [generate-string]]
+            [clojure.string :refer [split]]
             [datomic.api :as d]
             [hatch]
+            [inflections.core :refer [plural]]
             [traveler.conf :as t-conf]
             [traveler.schema :as t-schema]
             [traveler.datomic.output-models :refer :all]))
