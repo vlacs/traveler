@@ -10,7 +10,7 @@
                  [vlacs/timber "0.1.0-SNAPSHOT"]
                  [cheshire "5.3.1"]
                  [com.datomic/datomic-free "0.9.4707" :exclusions [commons-codec]]
-                 [crypto-password "0.1.3"]
+                 [crypto-password "0.1.3" :exclusions [commons-codec]]
                  [datomic-schematode "0.1.0-RC1"]
                  [digest "1.4.4"]
                  [enlive "1.1.5"]
