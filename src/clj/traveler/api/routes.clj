@@ -13,22 +13,22 @@
                                         {:name "Traveler"
                                          :version "0.1"}}))
 
-   :users-add    (resource :allowed-methods [:put]
-                           :available-media-types ["application/json"]
-                           :put! (fn [ctx] (add-user ctx))
-                           :handle-created (fn [ctx] (handle-created ctx)))
+   :user-add    (resource :allowed-methods [:put]
+                          :available-media-types ["application/json"]
+                          :put! (fn [ctx] (add-user ctx))
+                          :handle-created (fn [ctx] (handle-created ctx)))
 
-   :users-search (resource :allowed-methods [:get]
-                           :available-media-types ["text/html"]
-                           :handle-ok (fn [ctx] (str "this is a search")))
+   :user-search (resource :allowed-methods [:get]
+                          :available-media-types ["application/json"]
+                          :handle-ok (fn [ctx] (search-user ctx)))
 
-   :users-user   (resource :allowed-methods [:get]
-                           :available-media-types ["application/json"]
-                           :handle-ok (fn [ctx]))})
+   :user-user   (resource :allowed-methods [:get]
+                          :available-media-types ["application/json"]
+                          :handle-ok (fn [ctx] (get-user ctx)))})
 
 (def api-routes
   "Helmsman routes for the api endpoint"
   [[:any "/" (:api liberator-resources)]
-   [:any "/users/add"    (:users-add liberator-resources)]
-   [:any "/users/search/:query" (:users-search liberator-resources)]
-   [:any "/users/:id-sk" (:users-user liberator-resources)]])
+   [:any "/user/add"    (:user-add liberator-resources)]
+   [:any "/user/search/:query" (:user-search liberator-resources)]
+   [:any "/user/:id-sk" (:user-user liberator-resources)]])

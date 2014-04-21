@@ -16,17 +16,26 @@
 
 (def tx-entity! (partial hatch/tx-clean-entity! t-schema/partitions t-schema/valid-attrs))
 
-(defn find-ents
-  "Find an entity using a case-insensitive regex match"
-  [attr match]
+(defn strip-namespace
+  "Strip the datomic namespace from keys in a map"
+  [in]
+  (reduce conj {}
+        (map #(vector (keyword (name (first %))) (second %)) in)))
+
+(defn get-namespace
+  "Get the namespace of an attribute"
+  [in]
+  (first (split (apply str (rest (str in))) #"/")))
+
+(defn ent
+  "Get an entity by attribute value"
+  [attr value]
   (map #(d/entity (d/db (db)) (first %))
        (d/q '[:find ?e
-              :in $ ?attr ?matcher
-              :where
-              [?e ?attr ?ln]
-              [(re-find ?matcher ?ln)]]
+              :in $ ?attr-in ?attr
+              :where [?e ?attr-in ?attr]]
             (d/db (db))
-            attr (re-pattern (str "(?i:.*" match ".*)")))))
+            attr value)))
 
 (defn ents
   "Return all entities that have specific attribute
@@ -53,6 +62,18 @@
                                             (d/db (db))
                                             attr)))))))
 
+(defn find-ents
+  "Find an entity using a case-insensitive regex match"
+  [attr match]
+  (map #(d/entity (d/db (db)) (first %))
+       (d/q '[:find ?e
+              :in $ ?attr ?matcher
+              :where
+              [?e ?attr ?ln]
+              [(re-find ?matcher ?ln)]]
+            (d/db (db))
+            attr (re-pattern (str "(?i:.*" match ".*)")))))
+
 (defn user->db
   "Take pre-validated user map from liberator request
   and transact to database"
@@ -62,26 +83,37 @@
 (defn ent->map
   "Convert an entity to a map using an output-model"
   [convert-data entity]
-  (reduce (fn [m attr]
-            (if (keyword? attr)
-              (if-let [v (attr entity)]
-                (assoc m attr v)
-                m)
-              (let [[attr conv-fn] attr]
-                (if-let [v (attr entity)]
-                  (assoc m attr (conv-fn v))
-                  m))))
-          {}
-          convert-data))
+  (strip-namespace
+   (reduce (fn [m attr]
+             (if (keyword? attr)
+               (if-let [v (attr entity)]
+                 (assoc m attr v)
+                 m)
+               (let [[attr conv-fn] attr]
+                 (if-let [v (attr entity)]
+                   (assoc m attr (conv-fn v))
+                   m))))
+           {}
+           convert-data)))
 
 (defn find-ents->json
   "Find entities by attribute and convert to
   json using an output-model"
   [attr match output-model]
-  (let [entities (find-ents attr match)]
-    (map (fn find-ents->json- [e]
-           (generate-string (ent->map output-model e)))
-         entities)))
+  (generate-string {(keyword (plural (get-namespace attr)))
+                    (let [entities (find-ents attr match)]
+                      (into []
+                            (flatten
+                             (map (fn find-ents->json- [e]
+                                    (vector (ent->map output-model e)))
+                                  entities))))}))
+
+(defn ent->json
+  "Retrieve a single entity by attribute value in
+  JSON format"
+  [attr value output-model]
+  (let [entity (first (ent attr value))]
+    (generate-string (ent->map output-model entity))))
 
 (defn ents->json
   "Convert all entities that have specific attribute
