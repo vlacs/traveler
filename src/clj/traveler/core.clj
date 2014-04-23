@@ -25,6 +25,11 @@
                         :handle-ok (fn [ctx]
                                      (tmpl/render (tmpl/view-users ctx))))
 
+   :user      (resource :allowed-methods [:get]
+                        :available-media-types ["text/html"]
+                        :handle-ok (fn [ctx]
+                                     (tmpl/render (tmpl/view-user ctx))))
+
    :system    (resource :allowed-methods [:get]
                         :available-media-types ["text/html"]
                         :handle-ok (fn [ctx]
@@ -41,6 +46,8 @@
     [:any "/dashboard" (:dashboard liberator-resources)]
     ^{:name "Manage Users"}
     [:any "/users" (:users liberator-resources)]
+    ^{:name "Manage User"}
+    [:any "/user/:id-sk" (:user liberator-resources)]
     ^{:name "View System"}
     [:any "/system" (:system liberator-resources)]]
    (into [:context "/api"] api-routes)
