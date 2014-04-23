@@ -3,16 +3,16 @@
   (:use-macros [purnam.core :only [!]]
                [gyr.core :only [def.module def.controller def.directive]]))
 
-(def.module users-module [])
+(def.module traveler [])
 
-(def.directive users-module.ngEnter []
+(def.directive traveler.ngEnter []
   (fn [scope element attrs]
     (element.bind "keydown keypress" (fn [event]
                                        (if (== event.which 13)
                                          (scope.$apply (fn []
                                                          (scope.$eval attrs.ngEnter))))))))
 
-(def.controller users-module.users-ctrl [$scope $filter]
+(def.controller traveler.users-ctrl [$scope $filter]
   ;;modify these values to change the defaults
   (! $scope.gap 5)
   (! $scope.usersPerPage 10)
