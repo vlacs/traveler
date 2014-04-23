@@ -105,3 +105,21 @@
 
   ;;Run the search to populate the table
   ($scope.search))
+
+(def.controller traveler.user-ctrl [$scope $http]
+  (! $scope.userFound "loading")
+  (! $scope.user "")
+
+  (! $scope.setUserId (fn [userId]
+                        (! $scope.userId userId)
+                        ($scope.getUser)))
+
+  (! $scope.getUser (fn []
+                      (-> $http
+                          (.get (str "/api/user/" $scope.userId))
+                          (.success (fn [data]
+                                      (! $scope.user (aget data "user"))
+                                      (if (aget data "user" "username")
+                                        (! $scope.userFound "yes")
+                                        (! $scope.userFound "no"))))
+                          (.error (fn [] (! $scope.userFound "error")))))))
