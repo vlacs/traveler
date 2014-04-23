@@ -2,13 +2,22 @@
   (:require [net.cgrand.enlive-html :as html]
             [traveler.utils :as t-utils :refer [maybe-content
                                                 maybe-substitute]]))
+(defn transform-vars
+  "Transform elements inside varmap"
+  [varmap]
+  (html/transform-content
+   (html/replace-vars varmap)))
+
+(defn page-transforms
+  "Default page transformations"
+  [base-uri]
+  {:ASSET_PATH (str base-uri "/static")
+   :BASE_PATH base-uri})
 
 (defn replace-page-vars
   "Replace variables in the template"
   [base-uri]
-  (html/transform-content
-   (html/replace-vars {:ASSET_PATH (str base-uri "/static")
-                       :BASE_PATH base-uri})))
+  (transform-vars (page-transforms base-uri)))
 
 (defn render
   "Take a template and render it to something liberator understands"
@@ -42,6 +51,11 @@
 (html/defsnippet ^{:doc "Load html for users page"}
   pg-users "templates/pages/users.html" [:div.content]
   [])
+
+(html/defsnippet ^{:dov "Load html for single user page"}
+  pg-user "templates/pages/user.html" [:div.content]
+  [ctx]
+  [:div#init] (html/set-attr :ng-init (str "setUserId('" (t-utils/get-param ctx :id-sk) "')")))
 
 (html/defsnippet ^{:doc "Load html for system page"}
   pg-system "templates/pages/system.html" [:div.content]
@@ -77,7 +91,15 @@
   [ctx]
   (layout-main {:title "VLACS Traveler - Users"
                 :content (pg-users)
-                :ng-app "users-module"
+                :ng-app "traveler"
+                :ctx ctx}))
+
+(defn view-user
+  "Single user view"
+  [ctx]
+  (layout-main {:title "VLACS Traveler - User"
+                :content (pg-user ctx)
+                :ng-app "traveler"
                 :ctx ctx}))
 
 (defn view-system
