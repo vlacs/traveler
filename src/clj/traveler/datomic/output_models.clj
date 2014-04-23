@@ -4,7 +4,7 @@
   "Define template for user map"
   [:user/can-masquerade
    :user/istest
-   :user/polocies-assent-date
+   :user/policies-assent-date
    :user/privilege
    :user/email
    :user/lastname
