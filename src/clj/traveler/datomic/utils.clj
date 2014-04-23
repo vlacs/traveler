@@ -1,6 +1,6 @@
 (ns traveler.datomic.utils
   (:require [cheshire.core :refer [generate-string]]
-            [clojure.string :refer [split]]
+            [clojure.string :refer [split replace]]
             [datomic.api :as d]
             [hatch]
             [inflections.core :refer [plural]]
@@ -20,7 +20,8 @@
   "Strip the datomic namespace from keys in a map"
   [in]
   (reduce conj {}
-          (map #(vector (keyword (name (first %))) (second %)) in)))
+          (map #(vector (keyword (replace (name (first %)) #"-" "_"))
+                        (second %)) in)))
 
 (defn get-namespace
   "Get the namespace of an attribute"
