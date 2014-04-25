@@ -15,27 +15,42 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <table class="table table-striped table-condensed table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Username</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Privilege</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="user in pagedUsers[currentPage - 1]">
-                                    <td>{{user.id}}</td>
-                                    <td>{{user.username}}</td>
-                                    <td>{{user.firstname}}</td>
-                                    <td>{{user.lastname}}</td>
-                                    <td>{{user.privilege}}</td>
-                                </tr>
-                            </tbody>
-
-                        </table>
+                        <span style="display:none">{{usersLoaded}}</span>
+                        <div ng-cloak ng-switch="usersLoaded">
+                            <div ng-switch-when="yes">
+                                <table class="table table-striped table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Username</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Privilege</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="user in users"
+                                            ng-click="gotoUser(user)">
+                                            <td>{{user.id_sk}}</td>
+                                            <td>{{user.username}}</td>
+                                            <td>{{user.firstname}}</td>
+                                            <td>{{user.lastname}}</td>
+                                            <td>{{user.privilege}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng-switch-when="no">
+                                <b>No users were found in the database</b>
+                            </div>
+                            <div ng-switch-when="error">
+                                <b>Server error, please try again</b>
+                            </div>
+                            <div style="text-align:center;" ng-switch-default>
+                                <i class="fa fa-refresh fa-spin fa-3x"></i><br />
+                                <b>Loading...</b>
+                            </div>
+                        </div>
                         <div class="form-inline form-group pull-left">
                             <select class="form-control pagination-select nice-select" ng-change="search()" ng-model="usersPerPage">
                                 <option value="10">10</option>
