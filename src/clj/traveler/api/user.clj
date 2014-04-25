@@ -1,7 +1,8 @@
 (ns traveler.api.user
   (:require [traveler.api.api :refer [gen-response]]
             [traveler.datomic.output-models :refer [user-no-pass]]
-            [traveler.datomic.utils :refer [user->db ent->json find-ents->json]]
+            [traveler.datomic.utils :refer [user->db ent->json
+                                            ents->json find-ents->json]]
             [traveler.utils :refer [get-param]]
             [cheshire.core :refer [generate-string]]
             [clojure.pprint :refer [pprint]]
@@ -34,6 +35,14 @@
         (user->db user)
         (gen-response))
       (gen-response (validate-add-user user)))))
+
+(defn get-users
+  "Public facing JSON endpoint to retrieve all users"
+  [ctx]
+  (let [per-page (read-string (get-in ctx [:request :route-params :per-page]))
+        cur-page (read-string (get-in ctx [:request :route-params :page]))
+        offset   (* per-page (dec cur-page))]
+    (ents->json :user/username user-no-pass per-page offset)))
 
 (defn get-user
   "Public facing JSON endpoint to retrieve a single user"
