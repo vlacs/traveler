@@ -12,7 +12,7 @@
                                          (scope.$apply (fn []
                                                          (scope.$eval attrs.ngEnter))))))))
 
-(def.controller traveler.users-ctrl [$scope $filter]
+(def.controller traveler.users-ctrl [$scope $http $window $filter]
   ;;modify these values to change the defaults
   (! $scope.gap 5)
   (! $scope.usersPerPage 10)
@@ -23,9 +23,8 @@
   (! $scope.currentPage 1)
   (! $scope.query "")
 
-  ;;this controller uses a data file that cannot be committed
-  ;;to source control, put yours here.
-  (! $scope.users userdata)
+  (! $scope.usersLoaded "loading")
+  (! $scope.users "")
 
   (defn searchMatch
     "Use this function to find a needle in the haystack!"
@@ -92,19 +91,32 @@
                       (! $scope.currentPage this.n)))
 
   (! $scope.showingFrom (fn []
-                          (if (== (count $scope.filteredUsers) 0)
+                          (if (== (count $scope.users) 0)
                             0
                             (inc (* (dec $scope.currentPage) $scope.usersPerPage)))))
 
   (! $scope.showingTo (fn []
-                        (if (== (count $scope.filteredUsers) 0)
+                        (if (== (count $scope.users) 0)
                           0
                           (if (== $scope.currentPage (count $scope.pagedUsers))
                             (count $scope.filteredUsers)
                             (* $scope.currentPage $scope.usersPerPage)))))
 
-  ;;Run the search to populate the table
-  ($scope.search))
+  (! $scope.loadUsers (fn []
+                        (-> $http
+                            (.get (str "/api/users/" $scope.usersPerPage "/" $scope.currentPage))
+                            (.success (fn [data]
+                                        (! $scope.users (aget data "users"))
+                                        (if (empty? (aget data "users"))
+                                          (! $scope.usersLoaded "no")
+                                          (! $scope.usersLoaded "yes"))))
+                            (.error (fn [] (! $scope.usersLoaded "error"))))))
+
+  (! $scope.gotoUser (fn [user]
+                       (! $window.location.href (str "/user/" (aget user "id_sk")))))
+
+  ;;Load the users to populate the table
+  ($scope.loadUsers))
 
 (def.controller traveler.user-ctrl [$scope $http]
   (! $scope.userFound "loading")
