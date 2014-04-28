@@ -15,7 +15,7 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <span ng-show="!showPaging">You searched for: <b>{{query}}</b> &nbsp;<a href="#" ng-click="clearSearch()" type="btn btn-default btn-xs"><i class="fa fa-trash-o fa-fw"></i></a></span>
+                        <span ng-show="isSearch"><a href="#" ng-click="clearSearch()" class="btn btn-default btn-xs"><i class="fa fa-trash-o fa-fw"></i> Clear Search</a><br /></span>
                         <span style="display:none">{{usersLoaded}}</span>
                         <div ng-cloak ng-switch="usersLoaded">
                             <div ng-switch-when="yes">
