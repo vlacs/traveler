@@ -1,5 +1,4 @@
 (ns traveler.ng.core
-  (:require [traveler.ng.userdata :refer [userdata]])
   (:use-macros [purnam.core :only [!]]
                [gyr.core :only [def.module def.controller def.directive]]))
 
@@ -18,7 +17,8 @@
   (! $scope.usersPerPage 10)
 
   ;;don't modify these values
-  (! $scope.showPaging true)
+  (! $scope.showPaging false)
+  (! $scope.isSearch false)
   (! $scope.filteredUsers (array))
   (! $scope.pagedUsers (array))
   (! $scope.currentPage 1)
@@ -47,6 +47,7 @@
                        ($scope.loadUsers)
                        (do
                          (! $scope.usersLoaded "loading")
+                         (! $scope.isSearch true)
                          (! $scope.showPaging false)
                          (-> $http
                              (.get (str "/api/user/search/" $scope.query))
@@ -114,6 +115,7 @@
                             (* $scope.usersPerPage $scope.currentPage)))))
 
   (! $scope.loadUsers (fn []
+                        (! $scope.isSearch false)
                         (! $scope.usersLoaded "loading")
                         (-> $http
                             (.get (str "/api/users/" $scope.usersPerPage "/" $scope.currentPage))
