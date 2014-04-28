@@ -1,15 +1,13 @@
 # Traveler [![Build Status](http://img.shields.io/travis/vlacs/traveler/master.svg)](https://travis-ci.org/vlacs/traveler?branch=master) [![Coverage](http://img.shields.io/coveralls/vlacs/traveler/master.svg)](http://coveralls.io/r/vlacs/traveler)
 =======
 
-TODO: Brief description
+Traveler stores VLACS' users in our datomic database and provides a user interface to search users and change passwords.
 
-## Releases and Dependency Information
+## Artifact
 
-* Releases are published to TODO_LINK
+* Releases are published to Clojars
 
-* Latest stable release is TODO_LINK
-
-* All released versions TODO_LINK
+Latest Artifact: ``` [org.vlacs/traveler "0.2.0"] ```
 
 
 ## Copyright and License
