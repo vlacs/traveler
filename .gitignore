@@ -2,6 +2,7 @@
 /lib
 /classes
 /checkouts
+config.edn
 pom.xml
 pom.xml.asc
 *.jar
@@ -12,3 +13,10 @@ pom.xml.asc
 .lein-repl-history
 .lein-git-deps
 config
+.nrepl-port
+.DS_Store
+user-data.js
+userdata.cljs
+testdata.dtm
+traveler.js
+traveler_dev.js

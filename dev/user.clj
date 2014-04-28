@@ -11,42 +11,31 @@
    [clojure.string :as str]
    [clojure.test :as test]
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
-   [traveler]))
-
-(def system
-  "A Var containing an object representing the application under
-  development."
-  nil)
-
-(defn init
-  "Creates and initializes the system under development in the Var
-  #'system."
-  []
-  ;; TODO
-  )
+   [datomic.api :as d]
+   [testdata.testdata :as td]
+   [traveler.system :as s]))
 
 (defn start
-  "Starts the system running, updates the Var #'system."
+  "Start the system from the REPL"
   []
-  ;; TODO
-  )
+  (s/start)
+  (d/transact @(:db s/system) (td/load-testdata))
+  :ready)
 
 (defn stop
-  "Stops the system if it is currently running, updates the Var
-  #'system."
+  "Stop the system from the REPL"
   []
-  ;; TODO
-  )
+  (s/stop)
+  :stopped)
 
 (defn go
-  "Initializes and starts the system running."
+  "Start the system from the REPL"
   []
-  (init)
   (start)
   :ready)
 
 (defn reset
-  "Stops the system, reloads modified source files, and restarts it."
+  "Reload project and restart it from the REPL"
   []
   (stop)
   (refresh :after 'user/go))
