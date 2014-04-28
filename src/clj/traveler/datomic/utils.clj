@@ -1,6 +1,7 @@
 (ns traveler.datomic.utils
   (:require [cheshire.core :refer [generate-string]]
-            [clojure.string :refer [split replace]]
+            [clojure.string :as string]
+            [clojure.pprint :refer [pprint]]
             [datomic.api :as d]
             [hatch]
             [inflections.core :refer [plural]]
@@ -20,13 +21,13 @@
   "Strip the datomic namespace from keys in a map"
   [in]
   (reduce conj {}
-          (map #(vector (keyword (replace (name (first %)) #"-" "_"))
+          (map #(vector (keyword (string/replace (name (first %)) #"-" "_"))
                         (second %)) in)))
 
 (defn get-namespace
   "Get the namespace of an attribute"
   [in]
-  (first (split (apply str (rest (str in))) #"/")))
+  (first (string/split (apply str (rest (str in))) #"/")))
 
 (defn ent
   "Get an entity by attribute value"
@@ -37,6 +38,16 @@
               :where [?e ?attr-in ?attr]]
             (d/db (db))
             attr value)))
+
+(defn count-ents
+  "Count the number of entities that have attribute"
+  [attr]
+  (ffirst
+   (d/q '[:find (count ?e)
+          :in $ ?a
+          :where [?e ?a]]
+        (d/db (db))
+        attr)))
 
 (defn ents
   "Return all entities that have specific attribute
@@ -127,7 +138,8 @@
                        (flatten
                         (map (fn ents->json- [e]
                                (vector (ent->map output-model e)))
-                             entities))})))
+                             entities))
+                       "count" (count-ents attr)})))
 
   ([attr output-model limit]
    (let [entities (ents attr limit)]
@@ -135,7 +147,8 @@
                        (flatten
                         (map (fn ents->json- [e]
                                (vector (ent->map output-model e)))
-                             entities))})))
+                             entities))
+                       "count" (count-ents attr)})))
 
   ([attr output-model limit offset]
    (let [entities (ents attr limit offset)]
@@ -143,4 +156,19 @@
                        (flatten
                         (map (fn ents->json- [e]
                                (vector (ent->map output-model e)))
-                             entities))}))))
+                             entities))
+                       "count" (count-ents attr)}))))
+
+(defn search
+  "Loop through attributes and return unique set of
+  entities converted to JSON using output model"
+  [attrs match output-model]
+  (generate-string {:results
+                    (into []
+                          (flatten
+                           (map (fn search- [r]
+                                  (vector (ent->map output-model r)))
+                                (distinct
+                                 (flatten
+                                  (for [attr attrs]
+                                    (find-ents attr match)))))))}))

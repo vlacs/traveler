@@ -2,7 +2,7 @@
   (:require [traveler.api.api :refer [gen-response]]
             [traveler.datomic.output-models :refer [user-no-pass]]
             [traveler.datomic.utils :refer [user->db ent->json
-                                            ents->json find-ents->json]]
+                                            ents->json search]]
             [traveler.utils :refer [get-param]]
             [cheshire.core :refer [generate-string]]
             [clojure.pprint :refer [pprint]]
@@ -24,7 +24,7 @@
             [:email present? "must be present"]
             [:policies-assent-date present? "must be present"]))
 
-;;TODO: Pull apart valip response on error and make the
+;;TODO:  Pull apart valip response on error and make the
 ;; error messages better.
 (defn add-user
   "Public facing add-user endpoint"
@@ -54,6 +54,5 @@
 (defn search-user
   "Public facing JSON endpoint to search for users"
   [ctx]
-  (let [query      (get-in ctx [:request :route-params :query])
-        s-username (find-ents->json :user/username (str query) user-no-pass)]
-    s-username))
+  (let [query (get-in ctx [:request :route-params :query])]
+    (search [:user/username :user/firstname :user/lastname :user/email] (str query) user-no-pass)))

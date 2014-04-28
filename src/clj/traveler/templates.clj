@@ -2,6 +2,7 @@
   (:require [net.cgrand.enlive-html :as html]
             [traveler.utils :as t-utils :refer [maybe-content
                                                 maybe-substitute]]))
+
 (defn transform-vars
   "Transform elements inside varmap"
   [varmap]

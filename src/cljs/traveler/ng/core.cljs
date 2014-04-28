@@ -18,12 +18,15 @@
   (! $scope.usersPerPage 10)
 
   ;;don't modify these values
+  (! $scope.showPaging true)
   (! $scope.filteredUsers (array))
   (! $scope.pagedUsers (array))
   (! $scope.currentPage 1)
   (! $scope.query "")
 
   (! $scope.usersLoaded "loading")
+  (! $scope.userPages 0)
+  (! $scope.usersCount 0)
   (! $scope.users "")
 
   (defn searchMatch
@@ -40,22 +43,30 @@
           (not= (.indexOf (.toLowerCase haystack) (.toLowerCase needle)) -1)))))
 
   (! $scope.search (fn []
-                     (! $scope.filteredUsers (($filter "filter")
-                                              $scope.users (fn [user]
-                                                              (if (not $scope.query)
-                                                                true)
-                                                              (let [search-fields (array (aget user "id") (aget user "username") (aget user "firstname") (aget user "lastname") (aget user "privilege"))
-                                                                    split-query (.split $scope.query #" ")
-                                                                    match (atom 0)]
-                                                                (doseq [q split-query]
-                                                                  (doseq [field search-fields]
-                                                                    (if (searchMatch field q)
-                                                                      (reset! match (inc @match)))))
-                                                                (if (>= @match (count split-query))
-                                                                  true
-                                                                  false)))))
-                     (! $scope.currentPage 1)
-                     ($scope.groupToPages)))
+                     (if (= $scope.query "")
+                       ($scope.loadUsers)
+                       (do
+                         (! $scope.usersLoaded "loading")
+                         (! $scope.showPaging false)
+                         (-> $http
+                             (.get (str "/api/user/search/" $scope.query))
+                             (.success (fn [data]
+                                         (if (empty? (aget data "results"))
+                                           (! $scope.usersLoaded "no")
+                                           (do
+                                             (! $scope.users (aget data "results"))
+                                             (! $scope.usersCount (count $scope.users))
+                                             (! $scope.userPages (Math/ceil (/ $scope.usersCount $scope.usersPerPage)))
+                                             (! $scope.usersLoaded "yes")))))
+                             (.error (fn []
+                                       (! $scope.users "")
+                                       (! $scope.usersCount 0)
+                                       (! $scope.userPages 0)
+                                       (! $scope.usersLoaded "error"))))))))
+
+  (! $scope.clearSearch (fn []
+                          (! $scope.query "")
+                          ($scope.search)))
 
   (! $scope.groupToPages (fn []
                            (! $scope.pagedUsers (array))
@@ -98,19 +109,29 @@
   (! $scope.showingTo (fn []
                         (if (== (count $scope.users) 0)
                           0
-                          (if (== $scope.currentPage (count $scope.pagedUsers))
-                            (count $scope.filteredUsers)
-                            (* $scope.currentPage $scope.usersPerPage)))))
+                          (if (>= (* $scope.currentPage $scope.usersPerPage) $scope.usersCount)
+                            (+ (count $scope.users) (* (dec $scope.currentPage) $scope.usersPerPage))
+                            (* $scope.usersPerPage $scope.currentPage)))))
 
   (! $scope.loadUsers (fn []
+                        (! $scope.usersLoaded "loading")
                         (-> $http
                             (.get (str "/api/users/" $scope.usersPerPage "/" $scope.currentPage))
                             (.success (fn [data]
-                                        (! $scope.users (aget data "users"))
                                         (if (empty? (aget data "users"))
                                           (! $scope.usersLoaded "no")
-                                          (! $scope.usersLoaded "yes"))))
-                            (.error (fn [] (! $scope.usersLoaded "error"))))))
+                                          (do
+                                            (! $scope.users (aget data "users"))
+                                            (! $scope.usersCount (aget data "count"))
+                                            (! $scope.userPages (Math/ceil (/ $scope.usersCount $scope.usersPerPage)))
+                                            (! $scope.showPaging true)
+                                            (! $scope.usersLoaded "yes")))))
+                            (.error (fn []
+                                      (! $scope.users "")
+                                      (! $scope.usersCount 0)
+                                      (! $scope.userPages 0)
+                                      (! $scope.showPaging false)
+                                      (! $scope.usersLoaded "error"))))))
 
   (! $scope.gotoUser (fn [user]
                        (! $window.location.href (str "/user/" (aget user "id_sk")))))
