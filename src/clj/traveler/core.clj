@@ -1,10 +1,11 @@
 (ns traveler.core
   (:require [helmsman :refer [compile-routes]]
+            [immutant.web :as web]
             [liberator.core :refer [resource]]
-            [liberator.dev :refer [wrap-trace]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.util.response :as response]
             [traveler.api.routes :refer [api-routes]]
+            [traveler.system :as s]
             [traveler.templates :as tmpl]
             [traveler.utils :as t-utils]))
 
@@ -53,9 +54,14 @@
    (into [:context "/api"] api-routes)
    ;;middleware
    [wrap-params]
-   [wrap-trace :header :ui]
    ])
 
 (def app
   "Main app"
   (compile-routes helmsman-definition))
+
+(defn init
+  "Immutant dev init function"
+  []
+  (s/start!)
+  (web/start app :reload true))

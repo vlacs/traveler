@@ -14,12 +14,10 @@
                  [datomic-schematode "0.1.0-RC1"]
                  [digest "1.4.4"]
                  [enlive "1.1.5"]
-                 [http-kit "2.1.16"]
                  [im.chit/gyr "0.3.1"]
                  [inflections "0.9.6"]
                  [liberator "0.10.0" :exclusions [hiccup]]
-                 [ring "1.2.1"]
-                 [ring/ring-json "0.3.0"]
+                 [ring/ring-core "1.2.2"]
                  [valip "0.2.0"]]
 
   :source-paths ["src/clj" "src/cljs"]
@@ -27,8 +25,13 @@
 
   :pedantic? :error
 
+  :immutant {:init traveler.core/init
+             :resolve-dependencies true
+             :context-path "/"}
+
   :plugins [[lein-cloverage "1.0.2"]
-            [lein-cljsbuild "1.0.2"]]
+            [lein-cljsbuild "1.0.2"]
+            [lein-immutant "1.2.1"]]
 
   :cljsbuild {:builds [{:id "traveler-dev"
                         :source-paths ["src/cljs"]

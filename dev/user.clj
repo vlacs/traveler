@@ -10,32 +10,21 @@
    [clojure.set :as set]
    [clojure.string :as str]
    [clojure.test :as test]
-   [clojure.tools.namespace.repl :refer (refresh refresh-all)]
    [datomic.api :as d]
-   [testdata.testdata :as td]
    [traveler.system :as s]))
-
-(defn start
-  "Start the system from the REPL"
-  []
-  (s/start)
-  (d/transact @(:db s/system) (td/load-testdata))
-  :ready)
 
 (defn stop
   "Stop the system from the REPL"
   []
-  (s/stop)
-  :stopped)
+  (s/stop!))
 
 (defn go
   "Start the system from the REPL"
   []
-  (start)
-  :ready)
+  (s/start!))
 
 (defn reset
-  "Reload project and restart it from the REPL"
+  "Reset your environment from the REPL"
   []
-  (stop)
-  (refresh :after 'user/go))
+  (s/stop!)
+  (s/start!))

@@ -1,62 +1,42 @@
 (ns traveler.system
   (:require [datomic-schematode.core :as ds-core]
             [datomic.api :as d]
-            [org.httpkit.server :refer :all]
-            [traveler.conf :as t-conf]
-            [traveler.core :as t-core]
-            [traveler.schema :as t-schema]))
+            [traveler.schema :as t-schema]
+            [traveler.state :as state]
+            [traveler.test-data :as td]))
 
-(defn conf
-  "Load conf on the fly"
+(def system {:datomic-uri "datomic:mem://traveler"})
+
+(defn load-schema!
   []
-  (t-conf/load-config))
+  [(ds-core/init-schematode-constraints! state/db)
+   (ds-core/load-schema! state/db t-schema/traveler-schema)])
 
-(def system
-  "Store the application state here"
-  {:web (atom nil) :db (atom nil)})
-
-(defn start-http
-  "Start the web server"
-  []
-  (reset! (:web system)
-          (run-server t-core/app {:port (get-in (conf) [:web :port])})))
-
-(defn stop-http
-  "Stop the web server"
-  []
-  (when-not (nil? @(:web system))
-    (@(:web system) :timeout 100)
-    (reset! (:web system) nil)))
-
-(defn start-datomic
+(defn start-datomic!
   "Start the datomic database and transact the schema"
-  []
-  (let [d-uri (get-in (conf) [:db :uri])]
-    (d/create-database d-uri)
-    (ds-core/init-schematode-constraints! (d/connect d-uri))
-    (ds-core/load-schema! (d/connect d-uri) t-schema/traveler-schema)
-    (reset! (:db system) (d/connect d-uri))))
+  [system]
+  (d/create-database (:datomic-uri system))
+  (state/set-db-var! (d/connect (:datomic-uri system))))
 
-(defn stop-datomic
+(defn stop-datomic!
   "Shutdown and destroy the datomic database"
-  []
-  (let [d-uri (get-in (conf) [:db :uri])]
-    (d/delete-database d-uri))
-  (reset! (:db system) nil))
+  [system]
+  (state/detach-db-var!)
+  (d/delete-database (:datomic-uri system))
+  system)
 
-(defn start
+(defn start!
   "Start the entire system"
   []
-  (start-http)
-  (start-datomic))
+  (start-datomic! system)
+  (println (str "Datomic started: " state/db))
+  (load-schema!)
+  (println (str "Datomic schema loaded!"))
+  (d/transact state/db (td/load-testdata))
+  (println (str "Test data loaded!"))
+  (println (str "Ready to set sail!")))
 
-(defn stop
+(defn stop!
   "Stop the entire system"
   []
-  (stop-http)
-  (stop-datomic))
-
-(defn -main
-  "Unused main method (for uberjar)"
-  [&args]
-  (start))
+  (stop-datomic!))

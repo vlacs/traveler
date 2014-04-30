@@ -5,15 +5,10 @@
             [datomic.api :as d]
             [hatch]
             [inflections.core :refer [plural]]
-            [traveler.conf :as t-conf]
             [traveler.schema :as t-schema]
-            [traveler.datomic.output-models :refer :all]))
+            [traveler.state :as t-state]))
 
-(defn conf []
-  (t-conf/load-config))
-
-(defn db []
-  (d/connect (get-in (conf) [:db :uri])))
+(def db t-state/db)
 
 (def tx-entity! (partial hatch/tx-clean-entity! t-schema/partitions t-schema/valid-attrs))
 
@@ -32,11 +27,11 @@
 (defn ent
   "Get an entity by attribute value"
   [attr value]
-  (map #(d/entity (d/db (db)) (first %))
+  (map #(d/entity (d/db db) (first %))
        (d/q '[:find ?e
               :in $ ?attr-in ?attr
               :where [?e ?attr-in ?attr]]
-            (d/db (db))
+            (d/db db)
             attr value)))
 
 (defn count-ents
@@ -46,51 +41,51 @@
    (d/q '[:find (count ?e)
           :in $ ?a
           :where [?e ?a]]
-        (d/db (db))
+        (d/db db)
         attr)))
 
 (defn ents
   "Return all entities that have specific attribute
   with option to limit or limit and offset them"
   ([attr]
-   (map #(d/entity (d/db (db)) (first %))
+   (map #(d/entity (d/db db) (first %))
         (sort (d/q '[:find ?e
                      :in $ ?a
                      :where [?e ?a]]
-                   (d/db (db))
+                   (d/db db)
                    attr))))
   ([attr limit]
-   (map #(d/entity (d/db (db)) (first %))
+   (map #(d/entity (d/db db) (first %))
         (take limit (sort (d/q '[:find ?e
                                  :in $ ?a
                                  :where [?e ?a]]
-                               (d/db (db))
+                               (d/db db)
                                attr)))))
   ([attr limit offset]
-   (map #(d/entity (d/db (db)) (first %))
+   (map #(d/entity (d/db db) (first %))
         (take limit (drop offset (sort (d/q '[:find ?e
                                               :in $ ?a
                                               :where [?e ?a]]
-                                            (d/db (db))
+                                            (d/db db)
                                             attr)))))))
 
 (defn find-ents
   "Find an entity using a case-insensitive regex match"
   [attr match]
-  (map #(d/entity (d/db (db)) (first %))
+  (map #(d/entity (d/db db) (first %))
        (d/q '[:find ?e
               :in $ ?attr ?matcher
               :where
               [?e ?attr ?ln]
               [(re-find ?matcher ?ln)]]
-            (d/db (db))
+            (d/db db)
             attr (re-pattern (str "(?i:.*" match ".*)")))))
 
 (defn user->db
   "Take pre-validated user map from liberator request
   and transact to database"
   [user]
-  (tx-entity! (db) :user (hatch/slam-all user :user)))
+  (tx-entity! db :user (hatch/slam-all user :user)))
 
 (defn ent->map
   "Convert an entity to a map using an output-model"
