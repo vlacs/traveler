@@ -19,10 +19,7 @@ Once the Immutant server is up you can navigate to ''' http://localhost:8080 '''
 
 If you'd like to connect to Travelers REPL do the following inside of the project directory:
 
-```
-$ lein repl :connect
-
-```
+``` $ lein repl :connect ```
 
 ## Artifact
 
