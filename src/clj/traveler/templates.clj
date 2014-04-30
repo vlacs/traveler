@@ -31,26 +31,40 @@
 ;; base template
 
 (defn base-page
-  [{:keys [page-name request user-name main-menu user-menu page-content]}]
+  [{:keys [page-name brand request user-name main-menu
+           user-menu page-content extra-styles extra-scripts
+           ng-app]}]
   (timber/base-page
    {:page-name page-name
+    :brand brand
     :asset-uri-path (h-uri/relative-uri request (h-nav/id->uri-path request :timber/assets))
-    :user-name user-name
-    :main-menu main-menu
-    :user-menu user-menu
-    :page-content page-content
+    :user-name      user-name
+    :main-menu      main-menu
+    :user-menu      user-menu
+    :page-content   page-content
+    :extra-styles   extra-styles
+    :extra-scripts  extra-scripts
+    :ng-app         ng-app
     }))
 
 ;;snippets
 
+(def extra-styles
+  (timber/extra-styles
+   ["/static/css/traveler.css"]))
+
+(def extra-scripts
+  (timber/extra-scripts
+   ["/static/js/traveler.js"]))
+
 (def nav-side
   (timber/main-menu
    [{:menu-name "Dashboard"
-     :menu-url "/dashboard"}
+     :menu-url  "/dashboard"}
     {:menu-name "Users"
-     :menu-url "/users"}
+     :menu-url  "/users"}
     {:menu-name "System"
-     :menu-url "/system"}]))
+     :menu-url  "/system"}]))
 
 ;;pages
 
@@ -77,9 +91,13 @@
   "Main page layout type"
   [{:keys [title content ng-app ctx]}]
   (base-page {:page-name title
+              :brand "VLACS Traveler"
               :request (:request ctx)
               :main-menu nav-side
-              :page-content content}))
+              :page-content content
+              :extra-styles extra-styles
+              :extra-scripts extra-scripts
+              :ng-app ng-app}))
 
 ;;views
 
