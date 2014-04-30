@@ -20,3 +20,4 @@ userdata.cljs
 testdata.dtm
 traveler.js
 traveler_dev.js
+.descriptors/*

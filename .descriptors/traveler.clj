@@ -1,1 +1,0 @@
-{:root "/Users/mike/Projects/vlacs/traveler", :context-path "traveler", :lein-profiles [:dev :test], :swank-port nil, :nrepl-port 0, :nrepl-port-file "target/test-repl-port"}
