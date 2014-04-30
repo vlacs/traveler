@@ -4,6 +4,7 @@
             [liberator.core :refer [resource]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.util.response :as response]
+            [timber.core :as timber]
             [traveler.api.routes :refer [api-routes]]
             [traveler.system :as s]
             [traveler.templates :as tmpl]
@@ -39,7 +40,8 @@
 (def helmsman-definition
   "Main helmsman definition"
   [[:resources "/"]
-   [:resources "timber" {:root "/timber"}]
+   (first timber/helmsman-assets)
+   (second timber/helmsman-assets)
    ^{:name "Traveler"
      :main-menu true}
    [:any "/" dash-redirect
