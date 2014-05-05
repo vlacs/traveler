@@ -40,8 +40,6 @@
 (def helmsman-definition
   "Main helmsman definition"
   [[:resources "/"]
-   (first timber/helmsman-assets)
-   (second timber/helmsman-assets)
    ^{:name "Traveler"
      :main-menu true}
    [:any "/" dash-redirect
@@ -58,9 +56,12 @@
    [wrap-params]
    ])
 
+(def standalone-helmsman-definition
+  (into helmsman-definition (vector (first timber/helmsman-assets) (second timber/helmsman-assets))))
+
 (def app
   "Main app"
-  (compile-routes helmsman-definition))
+  (compile-routes standalone-helmsman-definition))
 
 (defn init
   "Immutant dev init function"
