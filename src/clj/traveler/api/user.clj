@@ -24,17 +24,14 @@
             [:email present? "must be present"]
             [:policies-assent-date present? "must be present"]))
 
-;;TODO:  Pull apart valip response on error and make the
-;; error messages better.
 (defn add-user
-  "Public facing add-user endpoint"
-  [ctx]
-  (let [user (keywordize-keys (get-in ctx [:request :params]))]
-    (if (nil? (validate-add-user user))
-      (do
-        (user->db user)
-        (gen-response))
-      (gen-response (validate-add-user user)))))
+  "Gangway add-user endpoint"
+  [user]
+  (if (nil? (validate-add-user user))
+    (do
+      (user->db user)
+      :success)
+    (validate-add-user user)))
 
 (defn get-users
   "Public facing JSON endpoint to retrieve all users"

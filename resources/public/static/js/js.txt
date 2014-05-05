@@ -1,0 +1,2 @@
+lein cljsbuild once
+will put the compiled javascript here

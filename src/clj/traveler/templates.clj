@@ -1,5 +1,8 @@
 (ns traveler.templates
   (:require [net.cgrand.enlive-html :as html]
+            [helmsman.uri :as h-uri]
+            [helmsman.navigation :as h-nav]
+            [timber.core :as timber]
             [traveler.utils :as t-utils :refer [maybe-content
                                                 maybe-substitute]]))
 
@@ -27,56 +30,74 @@
 
 ;; base template
 
-(html/deftemplate ^{:doc "Load and transform the base html for the site"}
-  base "templates/base.html"
-  [{:keys [title nav-side content base-uri ng-app]}]
-  [:html]          (html/set-attr :ng-app (or ng-app (str "")))
-  [:head :title]   (maybe-content title)
-  [:#nav]          (maybe-substitute nav-side)
-  [:div.content]   (maybe-substitute content)
-  [#{:head :body}] (replace-page-vars base-uri))
+(defn base-page
+  [{:keys [page-name brand request user-name main-menu
+           user-menu page-content extra-styles extra-scripts
+           ng-app]}]
+  (timber/base-page
+   {:page-name page-name
+    :brand brand
+    :asset-uri-path (h-uri/relative-uri request (h-nav/id->uri-path request :timber/assets))
+    :user-name      user-name
+    :main-menu      main-menu
+    :user-menu      user-menu
+    :page-content   page-content
+    :extra-styles   extra-styles
+    :extra-scripts  extra-scripts
+    :ng-app         ng-app
+    }))
 
 ;;snippets
 
-(html/defsnippet ^{:doc "Load html for sidebar and transform"}
-  nav-side "templates/snippets/nav-side.html" [:nav#nav]
-  [{:keys [brand nav-items]}]
-  [:a.navbar-brand] (maybe-content brand))
+(def extra-styles
+  (timber/extra-styles
+   ["/static/css/traveler.css"]))
+
+(def extra-scripts
+  (timber/extra-scripts
+   ["/static/js/traveler.js"]))
+
+(def nav-side
+  (timber/main-menu
+   [{:menu-name "Dashboard"
+     :menu-url  "/dashboard"}
+    {:menu-name "Users"
+     :menu-url  "/users"}
+    {:menu-name "System"
+     :menu-url  "/system"}]))
 
 ;;pages
 
 (html/defsnippet ^{:doc "Load html for dashboard page"}
-  pg-dashboard "templates/pages/dashboard.html" [:div.content]
+  pg-dashboard "templates/pages/dashboard.html" [:div#content]
   [])
 
 (html/defsnippet ^{:doc "Load html for users page"}
-  pg-users "templates/pages/users.html" [:div.content]
+  pg-users "templates/pages/users.html" [:div#content]
   [])
 
 (html/defsnippet ^{:dov "Load html for single user page"}
-  pg-user "templates/pages/user.html" [:div.content]
+  pg-user "templates/pages/user.html" [:div#content]
   [ctx]
   [:div#init] (html/set-attr :ng-init (str "setUserId('" (t-utils/get-param ctx :id-sk) "')")))
 
 (html/defsnippet ^{:doc "Load html for system page"}
-  pg-system "templates/pages/system.html" [:div.content]
+  pg-system "templates/pages/system.html" [:div#content]
   [])
-
-;;navbars
-;;(defn nav-main []
-;;  (nav {:brand "VLACS Dossier"}))
 
 ;;layouts
 
 (defn layout-main
   "Main page layout type"
   [{:keys [title content ng-app ctx]}]
-  (base {:title title
-         ;;:nav-side (nav-side)
-         :content content
-         ;;:footer (footer)
-         :base-uri (t-utils/base-uri ctx)
-         :ng-app ng-app}))
+  (base-page {:page-name title
+              :brand "VLACS Traveler"
+              :request (:request ctx)
+              :main-menu nav-side
+              :page-content content
+              :extra-styles extra-styles
+              :extra-scripts extra-scripts
+              :ng-app ng-app}))
 
 ;;views
 

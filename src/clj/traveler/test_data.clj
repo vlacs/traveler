@@ -1,10 +1,10 @@
-(ns testdata.testdata
+(ns traveler.test-data
   (:require [clojure.pprint :refer [pprint]]
             [traveler.utils :refer [file-exists?]]))
 
 (def testdata-path
   "Default test data path"
-  "dev/testdata/")
+  "test/traveler/test_data/")
 
 (defn load-dtm
   "Load dtm file if it exits, or return empty vector"

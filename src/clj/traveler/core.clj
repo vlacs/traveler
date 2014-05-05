@@ -1,10 +1,12 @@
 (ns traveler.core
   (:require [helmsman :refer [compile-routes]]
+            [immutant.web :as web]
             [liberator.core :refer [resource]]
-            [liberator.dev :refer [wrap-trace]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.util.response :as response]
+            [timber.core :as timber]
             [traveler.api.routes :refer [api-routes]]
+            [traveler.system :as s]
             [traveler.templates :as tmpl]
             [traveler.utils :as t-utils]))
 
@@ -38,7 +40,8 @@
 (def helmsman-definition
   "Main helmsman definition"
   [[:resources "/"]
-   [:resources "timber" {:root "/timber"}]
+   (first timber/helmsman-assets)
+   (second timber/helmsman-assets)
    ^{:name "Traveler"
      :main-menu true}
    [:any "/" dash-redirect
@@ -53,9 +56,14 @@
    (into [:context "/api"] api-routes)
    ;;middleware
    [wrap-params]
-   [wrap-trace :header :ui]
    ])
 
 (def app
   "Main app"
   (compile-routes helmsman-definition))
+
+(defn init
+  "Immutant dev init function"
+  []
+  (s/start!)
+  (web/start app :reload true))
