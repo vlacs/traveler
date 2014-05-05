@@ -4,7 +4,7 @@
 
 Traveler stores VLACS' users in our datomic database and provides a user interface to search users and change passwords.
 
-## Running the Traveler Project
+## Running the Traveler project
 
 If you'd like to run Traveler as a standalone application just complete the following steps:
 
@@ -17,7 +17,7 @@ $ lein immutant server
 
 Once the Immutant server is up you can navigate to ''' http://localhost:8080 ''' in your browser.
 
-If you'd like to connect to Travelers REPL do the following inside of the project directory:
+If you'd like to connect to Traveler's REPL do the following inside of the project directory:
 
 ``` $ lein repl :connect ```
 
@@ -27,6 +27,26 @@ If you'd like to connect to Travelers REPL do the following inside of the projec
 
 Latest Artifact: ``` [org.vlacs/traveler "0.2.0"] ```
 
+## Adding users
+
+To add users to the Taveler section of the datomic database Gangway should call
+the traveler.api.user/add-user fn.
+
+add-user takes a map with the following format:
+
+```
+{:id-sk                "1239048"
+ :username             "mgeorge"
+ :password             "d783andf094nadsfHASHED09anPASSWORD"
+ :privilege            "ACTIVE"
+ :firstname            "Mike"
+ :lastname             "George"
+ :email                "mgeorge@vlacs.org"
+ :policies-assent-date "12/01/2013"
+ :istest               true
+ :can-masquerade       true}
+```
+```:istest``` and ```:can-masquerade``` are optional and default to false.
 
 ## Copyright and License
 
