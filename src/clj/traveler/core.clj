@@ -13,7 +13,7 @@
 (defn dash-redirect
   "Quick hack to redirect to dashboard"
   [_]
-  (response/redirect "/dashboard"))
+  (response/redirect "dashboard"))
 
 (def liberator-resources
   "Core resources"

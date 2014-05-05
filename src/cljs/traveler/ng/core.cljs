@@ -50,7 +50,7 @@
                          (! $scope.isSearch true)
                          (! $scope.showPaging false)
                          (-> $http
-                             (.get (str "/api/user/search/" $scope.query))
+                             (.get (str "../api/user/search/" $scope.query))
                              (.success (fn [data]
                                          (if (empty? (aget data "results"))
                                            (! $scope.usersLoaded "no")
@@ -118,7 +118,7 @@
                         (! $scope.isSearch false)
                         (! $scope.usersLoaded "loading")
                         (-> $http
-                            (.get (str "/api/users/" $scope.usersPerPage "/" $scope.currentPage))
+                            (.get (str "../api/users/" $scope.usersPerPage "/" $scope.currentPage))
                             (.success (fn [data]
                                         (if (empty? (aget data "users"))
                                           (! $scope.usersLoaded "no")
@@ -136,7 +136,7 @@
                                       (! $scope.usersLoaded "error"))))))
 
   (! $scope.gotoUser (fn [user]
-                       (! $window.location.href (str "/user/" (aget user "id_sk")))))
+                       (! $window.location.href (str "user/" (aget user "id_sk")))))
 
   ;;Load the users to populate the table
   ($scope.loadUsers))
@@ -151,7 +151,7 @@
 
   (! $scope.getUser (fn []
                       (-> $http
-                          (.get (str "/api/user/" $scope.userId))
+                          (.get (str "../api/user/" $scope.userId))
                           (.success (fn [data]
                                       (! $scope.user (aget data "user"))
                                       (if (aget data "user" "username")

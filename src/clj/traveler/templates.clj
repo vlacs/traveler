@@ -60,11 +60,11 @@
 (def nav-side
   (timber/main-menu
    [{:menu-name "Dashboard"
-     :menu-url  "/dashboard"}
+     :menu-url  "dashboard"}
     {:menu-name "Users"
-     :menu-url  "/users"}
+     :menu-url  "users"}
     {:menu-name "System"
-     :menu-url  "/system"}]))
+     :menu-url  "system"}]))
 
 ;;pages
 
