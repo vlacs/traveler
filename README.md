@@ -1,6 +1,4 @@
-# Traveler [![Build Status](http://img.shields.io/travis/vlacs/traveler/galleon-integration.svg)](https://travis-ci.org/vlacs/traveler?branch=galleon-integration) [![Coverage](http://img.shields.io/coveralls/vlacs/traveler/galleon-integration.svg)](http://coveralls.io/r/vlacs/traveler)
-
-``` This branch is not stable ```
+# Traveler [![Build Status](http://img.shields.io/travis/vlacs/traveler/master.svg)](https://travis-ci.org/vlacs/traveler?branch=master) [![Coverage](http://img.shields.io/coveralls/vlacs/traveler/master.svg)](http://coveralls.io/r/vlacs/traveler)
 
 Traveler stores VLACS' users in our datomic database and provides a user interface to search users and change passwords.
 
