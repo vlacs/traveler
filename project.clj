@@ -1,4 +1,4 @@
-(defproject org.vlacs/traveler "0.2.6"
+(defproject org.vlacs/traveler "0.2.8"
   :description "Library that controls storage and management of user data"
   :url "http://vlacs.org"
   :license {:name "Eclipse Public License"
