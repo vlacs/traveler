@@ -1,5 +1,7 @@
 (ns traveler.core
   (:require [helmsman :refer [compile-routes]]
+            [helmsman.uri :as h-uri]
+            [helmsman.navigation :as h-nav]
             [immutant.web :as web]
             [liberator.core :refer [resource]]
             [ring.middleware.params :refer [wrap-params]]
@@ -11,9 +13,9 @@
             [traveler.utils :as t-utils]))
 
 (defn dash-redirect
-  "Quick hack to redirect to dashboard"
-  [_]
-  (response/redirect "dashboard"))
+  "Redirect to the dashboard"
+  [request]
+  (response/redirect (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/dashboard))))
 
 (def liberator-resources
   "Core resources"
@@ -41,15 +43,16 @@
   "Main helmsman definition"
   [[:resources "/"]
    ^{:name "Traveler"
+     :id :traveler/root
      :main-menu true}
    [:any "/" dash-redirect
-    ^{:name "Dashboard"}
+    ^{:name "Dashboard" :id :traveler/dashboard}
     [:any "/dashboard" (:dashboard liberator-resources)]
-    ^{:name "Manage Users"}
+    ^{:name "Manage Users" :id :traveler/users}
     [:any "/users" (:users liberator-resources)]
-    ^{:name "Manage User"}
+    ^{:name "Manage User" :id :traveler/user}
     [:any "/user/:id-sk" (:user liberator-resources)]
-    ^{:name "View System"}
+    ^{:name "View System" :id :traveler/system}
     [:any "/system" (:system liberator-resources)]]
    (into [:context "/api"] api-routes)
    ;;middleware
@@ -57,7 +60,7 @@
    ])
 
 (def standalone-helmsman-definition
-  (into helmsman-definition (vector (first timber/helmsman-assets) (second timber/helmsman-assets))))
+  (into timber/helmsman-assets helmsman-definition))
 
 (def app
   "Main app"

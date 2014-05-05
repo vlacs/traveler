@@ -2,6 +2,7 @@
   (:require [clojure.string :refer [split]]
             [clojure.pprint :refer [pprint]]
             [helmsman.uri :as h-uri]
+            [helmsman.navigation :as h-nav]
             [ring.util.response :refer [url-response]])
   (:import (java.io File)))
 
@@ -45,6 +46,14 @@
   (h-uri/assemble
    (h-uri/relative-uri
     (get-in ctx [:request :helmsman :uri-path]) [""])))
+
+(defn resource-uri
+  "Generate the relative uri to a resource"
+  [request path]
+  (str
+   (h-uri/relative-uri-str
+    request (h-nav/id->uri-path request :traveler/root))
+   path))
 
 (defn error
   "Get the error out of the liberator context"

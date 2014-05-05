@@ -49,22 +49,26 @@
 
 ;;snippets
 
-(def extra-styles
+(defn extra-styles
+  [request]
   (timber/extra-styles
-   ["/static/css/traveler.css"]))
+   [(t-utils/resource-uri request "/static/css/traveler.css")]))
 
-(def extra-scripts
+(defn extra-scripts
+  [request]
   (timber/extra-scripts
-   ["/static/js/traveler.js"]))
+   [(t-utils/resource-uri request "/static/js/traveler.js")]))
 
-(def nav-side
+(defn nav-side
+  "Generate the sidebar"
+  [request]
   (timber/main-menu
    [{:menu-name "Dashboard"
-     :menu-url  "dashboard"}
+     :menu-url  (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/dashboard))}
     {:menu-name "Users"
-     :menu-url  "users"}
+     :menu-url  (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/users))}
     {:menu-name "System"
-     :menu-url  "system"}]))
+     :menu-url  (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/system))}]))
 
 ;;pages
 
@@ -90,14 +94,15 @@
 (defn layout-main
   "Main page layout type"
   [{:keys [title content ng-app ctx]}]
-  (base-page {:page-name title
-              :brand "VLACS Traveler"
-              :request (:request ctx)
-              :main-menu nav-side
-              :page-content content
-              :extra-styles extra-styles
-              :extra-scripts extra-scripts
-              :ng-app ng-app}))
+  (let [request (:request ctx)]
+    (base-page {:page-name title
+                :brand "VLACS Traveler"
+                :request request
+                :main-menu (nav-side request)
+                :page-content content
+                :extra-styles (extra-styles request)
+                :extra-scripts (extra-scripts request)
+                :ng-app ng-app})))
 
 ;;views
 
