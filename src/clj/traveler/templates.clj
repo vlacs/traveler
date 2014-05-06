@@ -62,6 +62,7 @@
 (defn nav-side
   "Generate the sidebar"
   [request]
+  (prn (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/dashboard)))
   (timber/main-menu
    [{:menu-name "Dashboard"
      :menu-url  (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/dashboard))}
