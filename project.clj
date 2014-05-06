@@ -9,7 +9,7 @@
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.5-20140505_122511-g1af41e7"]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
-                 [org.vlacs/timber "0.1.7-20140506_025337-g4be87cc" :exclusions [org.vlacs/helmsman]]
+                 [org.vlacs/timber "0.1.7-20140506_033559-gae34e51" :exclusions [org.vlacs/helmsman]]
                  [cheshire "5.3.1"]
                  [com.datomic/datomic-free "0.9.4707"
                   :exclusions [commons-codec org.jgroups/jgroups org.jboss.logging/jboss-logging]]
