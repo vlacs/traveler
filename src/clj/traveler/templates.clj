@@ -41,8 +41,8 @@
     :user-name      user-name
     :main-menu      main-menu
     :user-menu      user-menu
+    ;;; :page-content   page-content
     :page-content   (prn-str (:helmsman request))
-    :page-content   page-content
     :extra-styles   extra-styles
     :extra-scripts  extra-scripts
     :ng-app         ng-app
