@@ -41,6 +41,7 @@
     :user-name      user-name
     :main-menu      main-menu
     :user-menu      user-menu
+    :page-content   (prn-str (:helmsman request))
     :page-content   page-content
     :extra-styles   extra-styles
     :extra-scripts  extra-scripts
