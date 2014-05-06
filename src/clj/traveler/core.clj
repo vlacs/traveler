@@ -45,6 +45,7 @@
    ^{:name "Traveler"
      :id :traveler/root
      :main-menu true}
+   [:any "/debugging" (fn [r] (prn-str (:helmsman r)))]
    [:any "/" dash-redirect]
    ^{:name "Dashboard" :id :traveler/dashboard}
    [:any "/dashboard" (:dashboard liberator-resources)]
