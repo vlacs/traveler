@@ -1,4 +1,4 @@
-(defproject org.vlacs/traveler "0.2.9"
+(defproject org.vlacs/traveler "0.2.10"
   :description "Library that controls storage and management of user data"
   :url "http://vlacs.org"
   :license {:name "Eclipse Public License"
@@ -27,7 +27,7 @@
 
   :pedantic? :error
 
-  :immutant {:init traveler.core/init
+  :immutant {:init traveler.system/init
              :resolve-dependencies true
              :context-path "/"}
 
