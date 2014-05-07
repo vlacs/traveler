@@ -5,29 +5,12 @@
             [ring.util.response :refer [url-response]])
   (:import (java.io File)))
 
-(defmacro maybe-substitute
-  "https://github.com/swannodette/enlive-tutorial/"
-  ([expr] `(if-let [x# ~expr] (html/substitute x#) identity))
-  ([expr & exprs] `(maybe-substitute (or ~expr ~@exprs))))
-
-(defmacro maybe-content
-  "https://github.com/swannodette/enlive-tutorial/"
-  ([expr] `(if-let [x# ~expr] (html/content x#) identity))
-  ([expr & exprs] `(maybe-content (or ~expr ~@exprs))))
-
 (defn file-exists?
   "Check if a file exists (boolean)"
   [path]
   (if (.isFile (File. path))
     true
     false))
-
-(defn throw-file-missing
-  "Throw an error if a file is missing."
-  [path]
-  (throw (ex-info
-          (format "File missing at (%s)" path)
-          {:cause :file-missing :file-path path})))
 
 (defn get-param
   "Get a parameter out of the liberator context"
@@ -39,18 +22,11 @@
   [ctx]
   (str (first (split (get-in ctx [:request :headers "referer"]) #"\?"))))
 
-(defn base-uri
-  "Generate the base uri from the liberator context"
-  [ctx]
-  (h-uri/assemble
-   (h-uri/relative-uri
-    (get-in ctx [:request :helmsman :uri-path]) [""])))
-
 (defn resource-uri
   "Generate the relative uri to a resource"
   [request path]
   (str
-   (h-uri/assemble (h-nav/id->uri-path request :traveler/root))
+   (h-uri/assemble (h-nav/id->uri-path request :traveler/resources))
    path))
 
 (defn id-uri
@@ -65,8 +41,3 @@
     (if (empty? error)
       false
       error)))
-
-(defn chop
-  "Removes the last character of string."
-  [s]
-  (subs s 0 (dec (count s))))

@@ -1,42 +1,63 @@
 (ns traveler.system
   (:require [datomic-schematode.core :as ds-core]
             [datomic.api :as d]
+            [helmsman :refer [compile-routes]]
+            [immutant.web :as web]
+            [timber.core :as timber]
+            [traveler.core :as t-core]
             [traveler.schema :as t-schema]
-            [traveler.state :as state]
             [traveler.test-data :as td]))
 
 (def system {:datomic-uri "datomic:mem://traveler"})
+(def datomic-uri (:datomic-uri system))
 
 (defn load-schema!
-  []
-  [(ds-core/init-schematode-constraints! state/db)
-   (ds-core/load-schema! state/db t-schema/traveler-schema)])
+  [system]
+  [(ds-core/init-schematode-constraints! (:db-conn system))
+   (ds-core/load-schema! (:db-conn system) t-schema/traveler-schema)])
 
 (defn start-datomic!
   "Start the datomic database and transact the schema"
-  [system]
-  (d/create-database (:datomic-uri system))
-  (state/set-db-var! (d/connect (:datomic-uri system))))
+  [s]
+  (d/create-database datomic-uri)
+  (assoc s :db-conn
+    (d/connect datomic-uri)))
 
 (defn stop-datomic!
   "Shutdown and destroy the datomic database"
-  [system]
-  (state/detach-db-var!)
-  (d/delete-database (:datomic-uri system))
-  system)
+  [s]
+  (d/delete-database datomic-uri)
+  (dissoc s :db-conn))
 
 (defn start!
   "Start the entire system"
   []
-  (start-datomic! system)
-  (println (str "Datomic started: " state/db))
-  (load-schema!)
+  (alter-var-root #'system start-datomic!)
+  (println (str "Datomic started: " (:db-conn system)))
+  (load-schema! system)
   (println (str "Datomic schema loaded!"))
-  (d/transact state/db (td/load-testdata))
+  (d/transact (:db-conn system) (td/load-testdata))
   (println (str "Test data loaded!"))
   (println (str "Ready to set sail!")))
 
 (defn stop!
   "Stop the entire system"
   []
-  (stop-datomic!))
+  (alter-var-root #'system
+                  (fn [s] (when s (-> s
+                                      (stop-datomic!))))))
+
+(defn standalone-helmsman-definition
+  [s]
+  (into timber/helmsman-assets (t-core/helmsman-definition (:db-conn s))))
+
+(defn app
+  "Main app"
+  [s]
+  (compile-routes (standalone-helmsman-definition s)))
+
+(defn init
+  "Immutant dev init function"
+  []
+  (start!)
+  (web/start (app system) :reload true))

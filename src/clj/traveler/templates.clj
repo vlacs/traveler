@@ -3,25 +3,7 @@
             [helmsman.uri :as h-uri]
             [helmsman.navigation :as h-nav]
             [timber.core :as timber]
-            [traveler.utils :as t-utils :refer [maybe-content
-                                                maybe-substitute]]))
-
-(defn transform-vars
-  "Transform elements inside varmap"
-  [varmap]
-  (html/transform-content
-   (html/replace-vars varmap)))
-
-(defn page-transforms
-  "Default page transformations"
-  [base-uri]
-  {:ASSET_PATH (str base-uri "/static")
-   :BASE_PATH base-uri})
-
-(defn replace-page-vars
-  "Replace variables in the template"
-  [base-uri]
-  (transform-vars (page-transforms base-uri)))
+            [traveler.utils :as t-utils]))
 
 (defn render
   "Take a template and render it to something liberator understands"

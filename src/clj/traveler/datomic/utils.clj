@@ -1,12 +1,10 @@
 (ns traveler.datomic.utils
   (:require [cheshire.core :refer [generate-string]]
             [clojure.string :as string]
-            [clojure.pprint :refer [pprint]]
             [datomic.api :as d]
             [hatch]
             [inflections.core :refer [plural]]
-            [traveler.schema :as t-schema]
-            [traveler.state :as t-state]))
+            [traveler.schema :as t-schema]))
 
 (def tx-entity! (partial hatch/tx-clean-entity! t-schema/partitions t-schema/valid-attrs))
 
@@ -24,66 +22,66 @@
 
 (defn ent
   "Get an entity by attribute value"
-  [attr value]
-  (map #(d/entity (d/db t-state/db) (first %))
+  [db attr value]
+  (map #(d/entity (d/db db) (first %))
        (d/q '[:find ?e
               :in $ ?attr-in ?attr
               :where [?e ?attr-in ?attr]]
-            (d/db t-state/db)
+            (d/db db)
             attr value)))
 
 (defn count-ents
   "Count the number of entities that have attribute"
-  [attr]
+  [db attr]
   (ffirst
    (d/q '[:find (count ?e)
           :in $ ?a
           :where [?e ?a]]
-        (d/db t-state/db)
+        (d/db db)
         attr)))
 
 (defn ents
   "Return all entities that have specific attribute
   with option to limit or limit and offset them"
-  ([attr]
-   (map #(d/entity (d/db t-state/db) (first %))
+  ([db attr]
+   (map #(d/entity (d/db db) (first %))
         (sort (d/q '[:find ?e
                      :in $ ?a
                      :where [?e ?a]]
-                   (d/db t-state/db)
+                   (d/db db)
                    attr))))
-  ([attr limit]
-   (map #(d/entity (d/db t-state/db) (first %))
+  ([db attr limit]
+   (map #(d/entity (d/db db) (first %))
         (take limit (sort (d/q '[:find ?e
                                  :in $ ?a
                                  :where [?e ?a]]
-                               (d/db t-state/db)
+                               (d/db db)
                                attr)))))
-  ([attr limit offset]
-   (map #(d/entity (d/db t-state/db) (first %))
+  ([db attr limit offset]
+   (map #(d/entity (d/db db) (first %))
         (take limit (drop offset (sort (d/q '[:find ?e
                                               :in $ ?a
                                               :where [?e ?a]]
-                                            (d/db t-state/db)
+                                            (d/db db)
                                             attr)))))))
 
 (defn find-ents
   "Find an entity using a case-insensitive regex match"
-  [attr match]
-  (map #(d/entity (d/db t-state/db) (first %))
+  [db attr match]
+  (map #(d/entity (d/db db) (first %))
        (d/q '[:find ?e
               :in $ ?attr ?matcher
               :where
               [?e ?attr ?ln]
               [(re-find ?matcher ?ln)]]
-            (d/db t-state/db)
+            (d/db db)
             attr (re-pattern (str "(?i:.*" match ".*)")))))
 
 (defn user->db
   "Take pre-validated user map from liberator request
   and transact to database"
-  [user]
-  (tx-entity! t-state/db :user (hatch/slam-all user :user)))
+  [db user]
+  (tx-entity! db :user (hatch/slam-all user :user)))
 
 (defn ent->map
   "Convert an entity to a map using an output-model"
@@ -104,8 +102,8 @@
 (defn find-ents->json
   "Find entities by attribute and convert to
   json using an output-model"
-  [attr match output-model]
-  (let [entities (find-ents attr match)]
+  [db attr match output-model]
+  (let [entities (find-ents db attr match)]
     (generate-string {(keyword (plural (get-namespace attr)))
                       (into []
                             (flatten
@@ -116,8 +114,8 @@
 (defn ent->json
   "Retrieve a single entity by attribute value in
   JSON format"
-  [attr value output-model]
-  (let [entity (first (ent attr value))]
+  [db attr value output-model]
+  (let [entity (first (ent db attr value))]
     (generate-string {(keyword (get-namespace attr))
                       (ent->map output-model entity)})))
 
@@ -125,37 +123,37 @@
   "Convert all entities that have specific attribute
   to json using an output-model with option to limit
   or limit and offset them"
-  ([attr output-model]
-   (let [entities (ents attr)]
+  ([db attr output-model]
+   (let [entities (ents db attr)]
      (generate-string {(keyword (plural (get-namespace attr)))
                        (flatten
                         (map (fn ents->json- [e]
                                (vector (ent->map output-model e)))
                              entities))
-                       "count" (count-ents attr)})))
+                       "count" (count-ents db attr)})))
 
-  ([attr output-model limit]
-   (let [entities (ents attr limit)]
+  ([db attr output-model limit]
+   (let [entities (ents db attr limit)]
      (generate-string {(keyword (plural (get-namespace attr)))
                        (flatten
                         (map (fn ents->json- [e]
                                (vector (ent->map output-model e)))
                              entities))
-                       "count" (count-ents attr)})))
+                       "count" (count-ents db attr)})))
 
-  ([attr output-model limit offset]
-   (let [entities (ents attr limit offset)]
+  ([db attr output-model limit offset]
+   (let [entities (ents db attr limit offset)]
      (generate-string {(keyword (plural (get-namespace attr)))
                        (flatten
                         (map (fn ents->json- [e]
                                (vector (ent->map output-model e)))
                              entities))
-                       "count" (count-ents attr)}))))
+                       "count" (count-ents db attr)}))))
 
 (defn search
   "Loop through attributes and return unique set of
   entities converted to JSON using output model"
-  [attrs match output-model]
+  [db attrs match output-model]
   (generate-string {:results
                     (into []
                           (flatten
@@ -164,4 +162,4 @@
                                 (distinct
                                  (flatten
                                   (for [attr attrs]
-                                    (find-ents attr match)))))))}))
+                                    (find-ents db attr match)))))))}))

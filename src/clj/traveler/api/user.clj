@@ -26,30 +26,30 @@
 
 (defn add-user
   "Gangway add-user endpoint"
-  [user]
+  [user db]
   (if (nil? (validate-add-user user))
     (do
-      (user->db user)
+      (user->db db user)
       :success)
     (validate-add-user user)))
 
 (defn get-users
   "Public facing JSON endpoint to retrieve all users"
-  [ctx]
+  [ctx db]
   (let [per-page (read-string (get-in ctx [:request :route-params :per-page]))
         cur-page (read-string (get-in ctx [:request :route-params :page]))
         offset   (* per-page (dec cur-page))]
-    (ents->json :user/username user-no-pass per-page offset)))
+    (ents->json db :user/username user-no-pass per-page offset)))
 
 (defn get-user
   "Public facing JSON endpoint to retrieve a single user"
-  [ctx]
+  [ctx db]
   (let [id-sk (get-in ctx [:request :route-params :id-sk])
-        res   (ent->json :user/id-sk id-sk user-no-pass)]
+        res   (ent->json db :user/id-sk id-sk user-no-pass)]
     res))
 
 (defn search-user
   "Public facing JSON endpoint to search for users"
-  [ctx]
+  [ctx db]
   (let [query (get-in ctx [:request :route-params :query])]
-    (search [:user/username :user/firstname :user/lastname :user/email] (str query) user-no-pass)))
+    (search db [:user/username :user/firstname :user/lastname :user/email] (str query) user-no-pass)))
