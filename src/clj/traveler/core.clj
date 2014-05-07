@@ -43,15 +43,15 @@
    ^{:name "Traveler"
      :id :traveler/root
      :main-menu true}
-   [:any "/" (:dashboard liberator-resources)
-    ^{:name "Dashboard" :id :traveler/dashboard}
-    [:any "/dashboard" (:dashboard liberator-resources)]
-    ^{:name "Manage Users" :id :traveler/users}
-    [:any "/users" (:users liberator-resources)]
-    ^{:name "Manage User" :id :traveler/user}
-    [:any "/user/:id-sk" (:user liberator-resources)]
-    ^{:name "View System" :id :traveler/system}
-    [:any "/system" (:system liberator-resources)]]
+   [:any "/" (:dashboard liberator-resources)]
+   ^{:name "Dashboard" :id :traveler/dashboard}
+   [:any "/dashboard" (:dashboard liberator-resources)]
+   ^{:name "Manage Users" :id :traveler/users}
+   [:any "/users" (:users liberator-resources)]
+   ^{:name "Manage User" :id :traveler/user}
+   [:any "/user/:id-sk" (:user liberator-resources)]
+   ^{:name "View System" :id :traveler/system}
+   [:any "/system" (:system liberator-resources)]
    (into [:context "/api"] (api-routes db-conn))
    ;;middleware
    [wrap-params]
