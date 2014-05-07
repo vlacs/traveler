@@ -1,6 +1,5 @@
 (ns traveler.utils
   (:require [clojure.string :refer [split]]
-            [clojure.pprint :refer [pprint]]
             [helmsman.uri :as h-uri]
             [helmsman.navigation :as h-nav]
             [ring.util.response :refer [url-response]])
@@ -51,9 +50,13 @@
   "Generate the relative uri to a resource"
   [request path]
   (str
-   (h-uri/relative-uri-str
-    request (h-nav/id->uri-path request :traveler/root))
+   (h-uri/assemble (h-nav/id->uri-path request :traveler/root))
    path))
+
+(defn id-uri
+  "Generate the relative uri based on the helmsman id"
+  [request id]
+  (h-uri/assemble (h-nav/id->uri-path request id)))
 
 (defn error
   "Get the error out of the liberator context"

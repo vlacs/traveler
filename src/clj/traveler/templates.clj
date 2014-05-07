@@ -37,7 +37,7 @@
   (timber/base-page
    {:page-name page-name
     :brand brand
-    :asset-uri-path (h-uri/relative-uri request (h-nav/id->uri-path request :timber/assets))
+    :asset-uri-path (h-nav/id->uri-path request :timber/assets)
     :user-name      user-name
     :main-menu      main-menu
     :user-menu      user-menu
@@ -67,11 +67,11 @@
   (prn (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/dashboard)))
   (timber/main-menu
    [{:menu-name "Dashboard"
-     :menu-url  (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/dashboard))}
+     :menu-url  (t-utils/id-uri request :traveler/dashboard)}
     {:menu-name "Users"
-     :menu-url  (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/users))}
+     :menu-url  (t-utils/id-uri request :traveler/users)}
     {:menu-name "System"
-     :menu-url  (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/system))}]))
+     :menu-url  (t-utils/id-uri request :traveler/system)}]))
 
 ;;pages
 

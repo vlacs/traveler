@@ -15,7 +15,7 @@
 (defn dash-redirect
   "Redirect to the dashboard"
   [request]
-  (response/redirect (h-uri/relative-uri-str request (h-nav/id->uri-path request :traveler/dashboard))))
+  (response/redirect (h-nav/id->uri-path request :traveler/dashboard)))
 
 (def liberator-resources
   "Core resources"
