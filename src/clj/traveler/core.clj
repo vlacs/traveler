@@ -43,7 +43,7 @@
    ^{:name "Traveler"
      :id :traveler/root
      :main-menu true}
-   [:any "/" (:dashboard liberator-resources)]
+   [:any "/" dash-redirect]
    ^{:name "Dashboard" :id :traveler/dashboard}
    [:any "/dashboard" (:dashboard liberator-resources)]
    ^{:name "Manage Users" :id :traveler/users}
