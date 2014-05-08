@@ -26,7 +26,7 @@
   "Generate the relative uri to a resource"
   [request path]
   (str
-   (h-uri/assemble (h-nav/id->uri-path request :traveler/resources))
+   (h-uri/assemble (h-nav/id->uri-path request :traveler/root))
    path))
 
 (defn id-uri
