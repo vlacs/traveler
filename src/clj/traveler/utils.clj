@@ -26,13 +26,13 @@
   "Generate the relative uri to a resource"
   [request path]
   (str
-   (h-uri/assemble (h-nav/id->uri-path request :traveler/root))
+   (h-nav/id->uri request :traveler/root)
    path))
 
 (defn id-uri
   "Generate the relative uri based on the helmsman id"
   [request id]
-  (h-uri/assemble (h-nav/id->uri-path request id)))
+  (h-nav/id->uri request id))
 
 (defn error
   "Get the error out of the liberator context"

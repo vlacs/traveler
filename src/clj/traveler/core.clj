@@ -11,7 +11,7 @@
 (defn dash-redirect
   "Redirect to the dashboard"
   [request]
-  (response/redirect (h-nav/id->uri-path request :traveler/dashboard)))
+  (response/redirect (t-utils/id-uri request :traveler/dashboard)))
 
 (def liberator-resources
   "Core resources"
@@ -43,7 +43,7 @@
    ^{:name "Traveler"
      :id :traveler/root
      :main-menu true}
-   [:any "/" dash-redirect]
+   [:any "/" (:dashboard liberator-resources)]
    ^{:name "Dashboard" :id :traveler/dashboard}
    [:any "/dashboard" (:dashboard liberator-resources)]
    ^{:name "Manage Users" :id :traveler/users}
