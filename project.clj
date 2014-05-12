@@ -10,7 +10,7 @@
                  [org.vlacs/timber "0.1.7" :exclusions [org.vlacs/helmsman]]
                  [cheshire "5.3.1"]
                  [com.datomic/datomic-free "0.9.4707"
-                  :exclusions [commons-codec org.jgroups/jgroups org.jboss.logging/jboss-logging]]
+                  :exclusions [commons-codec org.jgroups/jgroups]]
                  [crypto-password "0.1.3" :exclusions [commons-codec]]
                  [datomic-schematode "0.1.0-RC1"]
                  [digest "1.4.4"]
