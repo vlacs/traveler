@@ -18,7 +18,6 @@
                  [im.chit/gyr "0.3.1"]
                  [inflections "0.9.6"]
                  [liberator "0.10.0" :exclusions [hiccup]]
-                 [org.immutant/immutant "1.1.1"]
                  [ring/ring-core "1.2.2"]
                  [valip "0.2.0"]]
 
