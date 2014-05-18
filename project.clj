@@ -1,22 +1,26 @@
-(defproject org.vlacs/traveler "0.2.11"
+(defproject org.vlacs/traveler "0.2.12"
   :description "Library that controls storage and management of user data"
   :url "http://vlacs.org"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-2173"]
-                 [org.vlacs/hatch "0.1.1" :exclusions [com.datomic/datomic-free]]
+
+                 ^{:voom {:repo "https://github.com/vlacs/hatch"}}
+                 [org.vlacs/hatch "0.1.2"]
+                 ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.6"]
-                 [org.vlacs/timber "0.1.7" :exclusions [org.vlacs/helmsman]]
+                 ^{:voom {:repo "https://github.com/vlacs/timber"}}
+                 [org.vlacs/timber "0.1.7"]
+
                  [cheshire "5.3.1"]
-                 [com.datomic/datomic-free "0.9.4707"
-                  :exclusions [commons-codec org.jgroups/jgroups]]
-                 [crypto-password "0.1.3" :exclusions [commons-codec]]
+                 [com.datomic/datomic-free "0.9.4766"]
+                 [crypto-password "0.1.3"]
                  [datomic-schematode "0.1.0-RC1"]
                  [digest "1.4.4"]
                  [enlive "1.1.5"]
                  [im.chit/gyr "0.3.1"]
-                 [inflections "0.9.6"]
+                 [inflections "0.9.6" :exclusions [commons-codec]]
                  [liberator "0.10.0" :exclusions [hiccup]]
                  [ring/ring-core "1.2.2"]
                  [valip "0.2.0"]]
