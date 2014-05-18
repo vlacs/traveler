@@ -9,12 +9,13 @@
                  ^{:voom {:repo "https://github.com/vlacs/hatch"}}
                  [org.vlacs/hatch "0.1.2"]
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.2.6"]
+                 [org.vlacs/helmsman "0.2.6" :exclusions [org.eclipse.jetty.orbit/javax.servlet]]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7"]
 
                  [cheshire "5.3.1"]
-                 [com.datomic/datomic-free "0.9.4766"]
+                 [com.datomic/datomic-free "0.9.4766"
+                  :exclusions [org.jboss.logging/jboss-logging org.jgroups/jgroups]]
                  [crypto-password "0.1.3"]
                  [datomic-schematode "0.1.0-RC1"]
                  [digest "1.4.4"]
@@ -22,6 +23,7 @@
                  [im.chit/gyr "0.3.1"]
                  [inflections "0.9.6" :exclusions [commons-codec]]
                  [liberator "0.10.0" :exclusions [hiccup]]
+                 [org.immutant/immutant "1.1.1"]
                  [ring/ring-core "1.2.2"]
                  [valip "0.2.0"]]
 
