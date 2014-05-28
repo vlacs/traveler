@@ -1,4 +1,4 @@
-# Traveler [![Build Status](http://img.shields.io/travis/vlacs/traveler/master.svg)](https://travis-ci.org/vlacs/traveler?branch=master) [![Coverage](http://img.shields.io/coveralls/vlacs/traveler/master.svg)](http://coveralls.io/r/vlacs/traveler)
+# Traveler ![Build Status](https://codeship.io/projects/84d9a4a0-c8a0-0131-554f-3aa2000f7504/status) [![Coverage](http://img.shields.io/coveralls/vlacs/traveler/master.svg)](http://coveralls.io/r/vlacs/traveler)
 
 Traveler stores VLACS' users in our datomic database and provides a user interface to search users and change passwords.
 
