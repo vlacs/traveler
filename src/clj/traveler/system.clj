@@ -1,5 +1,5 @@
 (ns traveler.system
-  (:require [datomic-schematode.core :as ds-core]
+  (:require [datomic-schematode :as dst]
             [datomic.api :as d]
             [helmsman :refer [compile-routes]]
             [immutant.web :as web]
@@ -13,8 +13,8 @@
 
 (defn load-schema!
   [system]
-  [(ds-core/init-schematode-constraints! (:db-conn system))
-   (ds-core/load-schema! (:db-conn system) t-schema/traveler-schema)])
+  [(dst/init-schematode-constraints! (:db-conn system))
+   (dst/load-schema! (:db-conn system) t-schema/traveler-schema)])
 
 (defn start-datomic!
   "Start the datomic database and transact the schema"

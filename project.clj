@@ -17,7 +17,7 @@
                  [com.datomic/datomic-free "0.9.4766"
                   :exclusions [org.jboss.logging/jboss-logging org.jgroups/jgroups]]
                  [crypto-password "0.1.3"]
-                 [datomic-schematode "0.1.0-RC1"]
+                 [datomic-schematode "0.1.0-RC3"]
                  [digest "1.4.4"]
                  [enlive "1.1.5"]
                  [im.chit/gyr "0.3.1"]
