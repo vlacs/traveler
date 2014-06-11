@@ -7,11 +7,11 @@
                  [org.clojure/clojurescript "0.0-2173"]
 
                  ^{:voom {:repo "https://github.com/vlacs/hatch"}}
-                 [org.vlacs/hatch "0.1.2"]
+                 [org.vlacs/hatch "0.2.1-20140611_202148-g5a77b1e"]
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
-                 [org.vlacs/helmsman "0.2.6" :exclusions [org.eclipse.jetty.orbit/javax.servlet]]
+                 [org.vlacs/helmsman "0.2.6-20140508_004555-g5275ae2" :exclusions [org.eclipse.jetty.orbit/javax.servlet]]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
-                 [org.vlacs/timber "0.1.7"]
+                 [org.vlacs/timber "0.1.7-20140603_205620-gd255b55"]
 
                  [cheshire "5.3.1"]
                  [com.datomic/datomic-free "0.9.4766"
