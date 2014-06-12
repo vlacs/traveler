@@ -11,6 +11,7 @@ $ git clone https://github.com/vlacs/traveler
 $ cd traveler
 $ lein voom freshen
 $ lein voom build-deps
+$ lein cljsbuild once
 $ lein immutant server
 ```
 
