@@ -9,7 +9,8 @@ If you'd like to run Traveler as a standalone application just complete the foll
 ```
 $ git clone https://github.com/vlacs/traveler
 $ cd traveler
-$ lein cljsbuild once
+$ lein voom freshen
+$ lein voom build-deps
 $ lein immutant server
 ```
 
