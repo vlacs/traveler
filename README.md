@@ -2,6 +2,11 @@
 
 Traveler stores VLACS' users in our datomic database and provides a user interface to search users and change passwords.
 
+## Running Tests
+You can build the necessary dependencies and run the tests with one command.
+
+```$ sh test.sh```
+
 ## Running the Traveler project
 
 If you'd like to run Traveler as a standalone application just complete the following steps:
