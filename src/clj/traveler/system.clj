@@ -49,7 +49,7 @@
 
 (defn standalone-helmsman-definition
   [s]
-  (into timber/helmsman-assets (t-core/helmsman-definition (:db-conn s))))
+  (into (timber/helmsman-assets s) (t-core/helmsman-definition (:db-conn s))))
 
 (defn app
   "Main app"
