@@ -1,2 +1,5 @@
 #!/bin/bash
-lein do voom freshen, voom build-deps, cljsbuild once, immutant test
+lein voom freshen
+lein voom build-deps
+lein cljsbuild once
+lein immutant test
