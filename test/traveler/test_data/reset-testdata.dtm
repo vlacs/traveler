@@ -5,7 +5,7 @@
          :user/privilege            "STUDENT"
          :user/lastname             "Doe"
          :user/firstname            "John"
-         :user/email                "jdoe@vlacs.org"
+         :user/email                "jdoe@scalv.gro"
          :user/policies-assent-date "03-03-2014"
          :user/istest               true
          :user/can-masquerade       false}
@@ -16,117 +16,117 @@
          :user/privilege            "STUDENT"
          :user/lastname             "Doe"
          :user/firstname            "Jane"
-         :user/email                "jdoe2@vlacs.org"
+         :user/email                "jdoe2@scalv.gro"
          :user/policies-assent-date "03-04-2014"
          :user/istest               true
          :user/can-masquerade       false}
-		 {:db/id #db/id[:db.part/user]
+        {:db/id #db/id[:db.part/user]
          :user/id-sk                "01103446"
          :user/username             "jsuraze"
          :user/password             "M3mn08aes9oUyRqV9wQ4O8XfE74f94O8"
          :user/privilege            "STUDENT"
          :user/lastname             "Suraze"
          :user/firstname            "Jon"
-         :user/email                "jsuraze@vlacs.org"
+         :user/email                "jsuraze@scalv.gro"
          :user/policies-assent-date "03-03-2014"
          :user/istest               true
          :user/can-masquerade       false}
-		 {:db/id #db/id[:db.part/user]
+        {:db/id #db/id[:db.part/user]
          :user/id-sk                "01211456"
          :user/username             "jberkley"
          :user/password             "P15oAx5ZXqCCa78Qa75i2dlKlh9n71j7"
          :user/privilege            "STUDENT"
          :user/lastname             "Berkley"
          :user/firstname            "John"
-         :user/email                "jberkley@vlacs.org"
+         :user/email                "jberkley@scalv.gro"
          :user/policies-assent-date "03-03-2014"
          :user/istest               true
          :user/can-masquerade       false
-		 {:db/id #db/id[:db.part/user]
-         :user/id-sk                "01023325"
-         :user/username             "sharvey"
-         :user/password             "Gu0F39uVOit3fL4FM2KeVOit3fL4FM2K"
-         :user/privilege            "STUDENT"
-         :user/lastname             "Harvey"
-         :user/firstname            "Salina"
-         :user/email                "sharvey@vlacs.org"
-         :user/policies-assent-date "03-03-2014"
-         :user/istest               true
-         :user/can-masquerade       false}
-		 {:db/id #db/id[:db.part/user]
-         :user/id-sk                "00121317"
-         :user/username             "jjohanson"
-         :user/password             "873N1m3D8MI28W873N1m3D8MI28Wadsf"
-         :user/privilege            "STUDENT"
-         :user/lastname             "Johanson"
-         :user/firstname            "Jen"
-         :user/email                "jjohanson@vlacs.org"
-         :user/policies-assent-date "03-03-2014"
-         :user/istest               true
-         :user/can-masquerade       false}
-		 {:db/id #db/id[:db.part/user]
-         :user/id-sk                "21022110"
-         :user/username             "rbright"
-         :user/password             "oI68Rbb14MbfmNP0U6eP4JzjIRTfdsdf"
-         :user/privilege            "STUDENT"
-         :user/lastname             "Bright"
-         :user/firstname            "Rebecca"
-         :user/email                "rbright@vlacs.org"
-         :user/policies-assent-date "03-03-2014"
-         :user/istest               true
-         :user/can-masquerade       false}
-		 {:db/id #db/id[:db.part/user]
-         :user/id-sk                "72520200"
-         :user/username             "bchow"
-         :user/password             "1WehcUt0jX1BZDnXJfdaseasdfasdfff"
-         :user/privilege            "STUDENT"
-         :user/lastname             "Chow"
-         :user/firstname            "Bob"
-         :user/email                "bchow@vlacs.org"
-         :user/policies-assent-date "03-03-2014"
-         :user/istest               true
-         :user/can-masquerade       false}
-		 {:db/id #db/id[:db.part/user]
-         :user/id-sk                "52543010"
-         :user/username             "psmith"
-         :user/password             "5bIdj5lHzyC6h6qTnqhjo7yC6h6qTnas"
-         :user/privilege            "STUDENT"
-         :user/lastname             "Smith"
-         :user/firstname            "Pedro"
-         :user/email                "psmith@vlacs.org"
-         :user/policies-assent-date "03-03-2014"
-         :user/istest               true
-         :user/can-masquerade       false}
-		 {:db/id #db/id[:db.part/user]
-         :user/id-sk                "11513100"
-         :user/username             "ralbright"
-         :user/password             "P9QclkR8R211mmQ9qtP9QckR8R211mQ9"
-         :user/privilege            "STUDENT"
-         :user/lastname             "Albright"
-         :user/firstname            "Rubin"
-         :user/email                "ralbright@vlacs.org"
-         :user/policies-assent-date "03-03-2014"
-         :user/istest               true
-         :user/can-masquerade       false}
-		 {:db/id #db/id[:db.part/user]
-         :user/id-sk                "11241110"
-         :user/username             "cquan"
-         :user/password             "O48V063VUXvJH6Ytn16yJuOasdjk454a"
-         :user/privilege            "STUDENT"
-         :user/lastname             "Quan"
-         :user/firstname            "Carrie"
-         :user/email                "cquan@vlacs.org"
-         :user/policies-assent-date "03-03-2014"
-         :user/istest               true
-         :user/can-masquerade       false}
-		 {:db/id #db/id[:db.part/user]
-         :user/id-sk                "50401110"
-         :user/username             "mspector"
-         :user/password             "PsEAdT07rk8rY64oq3vhgURVxf87djhk"
-         :user/privilege            "STUDENT"
-         :user/lastname             "Spector"
-         :user/firstname            "Mark"
-         :user/email                "mspector@vlacs.org"
-         :user/policies-assent-date "03-03-2014"
-         :user/istest               true
-         :user/can-masquerade       false}]}
+         {:db/id #db/id[:db.part/user]
+          :user/id-sk                "01023325"
+          :user/username             "sharvey"
+          :user/password             "Gu0F39uVOit3fL4FM2KeVOit3fL4FM2K"
+          :user/privilege            "STUDENT"
+          :user/lastname             "Harvey"
+          :user/firstname            "Salina"
+          :user/email                "sharvey@scalv.gro"
+          :user/policies-assent-date "03-03-2014"
+          :user/istest               true
+          :user/can-masquerade       false}
+         {:db/id #db/id[:db.part/user]
+          :user/id-sk                "00121317"
+          :user/username             "jjohanson"
+          :user/password             "873N1m3D8MI28W873N1m3D8MI28Wadsf"
+          :user/privilege            "STUDENT"
+          :user/lastname             "Johanson"
+          :user/firstname            "Jen"
+          :user/email                "jjohanson@scalv.gro"
+          :user/policies-assent-date "03-03-2014"
+          :user/istest               true
+          :user/can-masquerade       false}
+         {:db/id #db/id[:db.part/user]
+          :user/id-sk                "21022110"
+          :user/username             "rbright"
+          :user/password             "oI68Rbb14MbfmNP0U6eP4JzjIRTfdsdf"
+          :user/privilege            "STUDENT"
+          :user/lastname             "Bright"
+          :user/firstname            "Rebecca"
+          :user/email                "rbright@scalv.gro"
+          :user/policies-assent-date "03-03-2014"
+          :user/istest               true
+          :user/can-masquerade       false}
+         {:db/id #db/id[:db.part/user]
+          :user/id-sk                "72520200"
+          :user/username             "bchow"
+          :user/password             "1WehcUt0jX1BZDnXJfdaseasdfasdfff"
+          :user/privilege            "STUDENT"
+          :user/lastname             "Chow"
+          :user/firstname            "Bob"
+          :user/email                "bchow@scalv.gro"
+          :user/policies-assent-date "03-03-2014"
+          :user/istest               true
+          :user/can-masquerade       false}
+         {:db/id #db/id[:db.part/user]
+          :user/id-sk                "52543010"
+          :user/username             "psmith"
+          :user/password             "5bIdj5lHzyC6h6qTnqhjo7yC6h6qTnas"
+          :user/privilege            "STUDENT"
+          :user/lastname             "Smith"
+          :user/firstname            "Pedro"
+          :user/email                "psmith@scalv.gro"
+          :user/policies-assent-date "03-03-2014"
+          :user/istest               true
+          :user/can-masquerade       false}
+         {:db/id #db/id[:db.part/user]
+          :user/id-sk                "11513100"
+          :user/username             "ralbright"
+          :user/password             "P9QclkR8R211mmQ9qtP9QckR8R211mQ9"
+          :user/privilege            "STUDENT"
+          :user/lastname             "Albright"
+          :user/firstname            "Rubin"
+          :user/email                "ralbright@scalv.gro"
+          :user/policies-assent-date "03-03-2014"
+          :user/istest               true
+          :user/can-masquerade       false}
+         {:db/id #db/id[:db.part/user]
+          :user/id-sk                "11241110"
+          :user/username             "cquan"
+          :user/password             "O48V063VUXvJH6Ytn16yJuOasdjk454a"
+          :user/privilege            "STUDENT"
+          :user/lastname             "Quan"
+          :user/firstname            "Carrie"
+          :user/email                "cquan@scalv.gro"
+          :user/policies-assent-date "03-03-2014"
+          :user/istest               true
+          :user/can-masquerade       false}
+         {:db/id #db/id[:db.part/user]
+          :user/id-sk                "50401110"
+          :user/username             "mspector"
+          :user/password             "PsEAdT07rk8rY64oq3vhgURVxf87djhk"
+          :user/privilege            "STUDENT"
+          :user/lastname             "Spector"
+          :user/firstname            "Mark"
+          :user/email                "mspector@scalv.gro"
+          :user/policies-assent-date "03-03-2014"
+          :user/istest               true
+          :user/can-masquerade       false}]}
