@@ -3,6 +3,7 @@
 
 (def validations
   {:user {:id-sk                    s/Str
+          :id-sk-origin             s/Keyword
           :username                 s/Str
           :password                 s/Str
           :privilege                s/Str
