@@ -1,7 +1,7 @@
 (ns traveler.schema
   (:require hatch))
 
-(def traveler-schema
+(def schema
   "Main traveler datomic schema"
   [{:namespace :user
     :attrs [[:id-sk :string :db.unique/identity]
@@ -14,7 +14,3 @@
             [:policies-assent-date :string]
             [:istest :boolean]
             [:can-masquerade :boolean]]}])
-
-(def partitions (hatch/schematode->partitions traveler-schema))
-
-(def valid-attrs (hatch/schematode->attrs traveler-schema))

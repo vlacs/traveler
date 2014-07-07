@@ -1,6 +1,6 @@
-(ns traveler.core-test
+(ns traveler-test
   (:require [clojure.test :refer :all]
-            [traveler.core :refer :all]))
+            [traveler :refer :all]))
 
 (deftest a-test
   (testing "This test will always pass!"
