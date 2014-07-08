@@ -9,4 +9,4 @@
 (def tx-entity! (partial hatch/tx-clean-entity! partitions valid-attrs))
 
 (defn user-in [db-conn user]
-  (tx-entity! db-conn :user user))
+  (tx-entity! db-conn :user (hatch/slam-all user :user)))   ; TODO: consider having gangway do a slam-all
