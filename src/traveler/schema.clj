@@ -11,6 +11,5 @@
             [:lastname :string]
             [:firstname :string]
             [:email :string]
-            [:policies-assent-date :string]
             [:istest :boolean]
             [:can-masquerade :boolean]]}])

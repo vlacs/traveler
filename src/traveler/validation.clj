@@ -10,6 +10,5 @@
           :lastname                 s/Str
           :firstname                s/Str
           :email                    s/Str
-          :policies-ascent-date     s/Str
           :istest                   s/Bool
           :can-masquerade           s/Bool}})
