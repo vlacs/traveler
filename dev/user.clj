@@ -14,7 +14,8 @@
 (defn go
   "Start the system from the REPL"
   []
-  (tt-config/start!))
+  (tt-config/start!)
+  (traveler/start! tt-config/system))
 
 (defn reset
   "Reset your environment from the REPL"

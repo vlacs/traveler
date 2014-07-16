@@ -9,6 +9,9 @@
                  [org.vlacs/hatch "0.2.1-20140619_010011-g63ac9fa" :exclusions [com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.6-20140619_005947-gb4bb7d4"]
+                 ^{:voom {:repo "https://github.com/vlacs/flare"
+                          :branch "dev"}}
+                 [org.vlacs/flare "0.1.0-20140707_172541-g163ca2f"]
 
                  ^{:voom {:repo "https://github.com/vlacs/datomic-schematode" :branch "dev"}}
                  [datomic-schematode "0.1.3-RC1-20140624_195331-g210f6fa"]
