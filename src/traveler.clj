@@ -10,9 +10,13 @@
 (defn user-in [db-conn user]
   (tx-entity! db-conn :user (hatch/slam-all user :user)))   ; TODO: consider having gangway do a slam-all
 
-(defn start!
-  "Galleon start up fn that registers events with Flare."
+(defn init!
   [system]
   (flare.event/register! (:db-conn system) :traveler :user
                          (traveler.schema/attribute-names :user))
+  system)
+
+(defn start!
+  "Galleon start up fn that registers events with Flare."
+  [system]
   system)
