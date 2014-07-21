@@ -12,11 +12,11 @@
 
 (defn init!
   [system]
-  (flare.event/register! (:db-conn system) :traveler :user
-                         (traveler.schema/attribute-names :user))
   system)
 
 (defn start!
   "Galleon start up fn that registers events with Flare."
   [system]
+  (flare.event/register! (:db-conn system) :traveler :user
+                         (traveler.schema/attribute-names :user)) 
   system)
